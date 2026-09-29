@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Lanexang Assurance — social post, 1080x1080, all artwork vector. Open in Adobe Illustrator. -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <!-- Palette: yellow #FFC72C (70%) · deep blue #0E2F6B (20%) · white #FFFFFF (10%) -->
+    <linearGradient id="gYellow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFD84D"/>
+      <stop offset="1" stop-color="#F7A600"/>
+    </linearGradient>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1B4B9B"/>
+      <stop offset="1" stop-color="#0A2455"/>
+    </linearGradient>
+    <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF6DC"/>
+      <stop offset="1" stop-color="#FFE9A8"/>
+    </linearGradient>
+    <radialGradient id="gBokeh">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+
+    <clipPath id="clipDoc"><rect width="1080" height="1080"/></clipPath>
+    <clipPath id="clipHero"><rect x="26" y="0" width="1028" height="500"/></clipPath>
+    <clipPath id="clipPhoto"><rect x="26" y="766" width="1028" height="320"/></clipPath>
+    <clipPath id="clipLogo"><circle cx="109" cy="108" r="104"/></clipPath>
+    <clipPath id="clipAvatar"><circle cx="86" cy="720" r="34"/></clipPath>
+    <clipPath id="clipChild">
+      <path d="M715 1100 L722 925 C725 895 750 885 775 885 C805 885 828 895 832 925 L840 1100 Z"/>
+    </clipPath>
+
+    <!-- icons (24x24 grid) -->
+    <path id="icHeart" d="M12 21s-7.5-4.8-10-9.5C.4 8.2 2.6 4.5 6.4 4.5c2.1 0 3.7 1 5.6 3 1.9-2 3.5-3 5.6-3 3.8 0 6 3.700 4.400 7C19.500 16.200 12 21 12 21z"/>
+    <path id="icLike" d="M2 10h4.200v11H2z M8 10l3.800-7.500c1.700 0 2.800 1.400 2.500 3L13.600 8H20c1.500 0 2.500 1.300 2.100 2.700l-1.900 7.600c-.3 1.100-1.200 1.700-2.200 1.700H8z"/>
+    <path id="icComment" d="M12 3C6.500 3 2 6.600 2 11c0 2.300 1.200 4.300 3.100 5.700L4 21l4.500-2.400c1.100.3 2.300.5 3.500.5 5.500 0 10-3.600 10-8s-4.500-8-10-8z"/>
+    <path id="icShare" d="M14 4l7.500 7.200L14 18.500v-4.200c-5.500 0-8.800 1.800-11 5.700 1-7.200 4.600-11.600 11-12.300z"/>
+  </defs>
+
+  <g clip-path="url(#clipDoc)">
+    <!-- PAGE BACKGROUND -->
+    <rect width="1080" height="1080" fill="#EDF1F8"/>
+
+    <!-- CARD 1 -->
+    <rect x="26" y="-40" width="1028" height="674" rx="26" fill="#FFFFFF"/>
+
+    <!-- hero image -->
+    <g clip-path="url(#clipHero)">
+      <rect x="26" y="0" width="1028" height="500" fill="url(#gYellow)"/>
+      <!-- soft street bokeh -->
+      <circle cx="120" cy="90" r="90" fill="url(#gBokeh)"/>
+      <circle cx="250" cy="330" r="150" fill="url(#gBokeh)"/>
+      <circle cx="560" cy="60" r="70" fill="url(#gBokeh)"/>
+      <circle cx="760" cy="470" r="110" fill="url(#gBokeh)"/>
+      <circle cx="1010" cy="250" r="90" fill="url(#gBokeh)"/>
+      <circle cx="470" cy="210" r="40" fill="url(#gBokeh)"/>
+      <!-- wall / building blocks in the blurred background -->
+      <rect x="380" y="60" width="100" height="220" rx="8" fill="#FFFFFF" opacity="0.14"/>
+      <rect x="40" y="0" width="190" height="300" rx="12" fill="#FFFFFF" opacity="0.10"/>
+      <!-- deep-blue corner accent -->
+      <path d="M1054 330 C 990 400 930 470 860 500 L1054 500 Z" fill="#0E2F6B" opacity="0.10"/>
+
+      <!-- AGENT (man) -->
+      <!-- legs -->
+      <path d="M118 462 L330 470 C 345 500 350 530 350 540 L92 540 C 88 510 100 480 118 462 Z" fill="#0A1E45"/>
+      <!-- far arm (behind torso) -->
+      <path d="M215 275 C 170 310 150 390 190 450 C 230 500 300 505 334 498" fill="none" stroke="#0A2455" stroke-width="50" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- torso -->
+      <path d="M200 262 C 235 212 385 208 432 250 C 448 330 388 425 306 472 L 122 484 C 108 400 148 312 200 262 Z" fill="#0E2F6B"/>
+      <!-- shirt shading -->
+      <path d="M200 262 C 160 320 120 400 122 484 L 170 482 C 168 400 195 320 235 280 Z" fill="#0A2455" opacity="0.55"/>
+      <!-- neck -->
+      <path d="M292 186 L 340 186 L 344 232 C 330 246 306 246 290 232 Z" fill="#D9A07A"/>
+      <!-- collar -->
+      <path d="M282 218 L 316 262 L 352 216 L 338 206 L 316 236 L 296 206 Z" fill="#FFFFFF"/>
+      <!-- near arm -->
+      <path d="M392 262 C 470 300 472 400 396 440" fill="none" stroke="#123A7A" stroke-width="52" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M392 262 C 470 300 472 400 396 440" fill="none" stroke="#1B4B9B" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+      <!-- cuffs + hands -->
+      <circle cx="392" cy="444" r="22" fill="#F2B48C"/>
+      <circle cx="336" cy="500" r="21" fill="#F2B48C"/>
+      <!-- head -->
+      <ellipse cx="373" cy="140" rx="9" ry="16" fill="#E7A37C"/>
+      <ellipse cx="316" cy="136" rx="58" ry="70" fill="#F2B48C"/>
+      <path d="M262 150 C 270 190 300 208 330 205 C 300 195 280 175 274 150 Z" fill="#E7A37C" opacity="0.5"/>
+      <!-- hair -->
+      <path d="M256 128 C 246 58 300 36 346 50 C 388 62 384 110 374 132 C 366 104 336 92 302 96 C 280 100 264 112 256 128 Z" fill="#1A1F36"/>
+      <!-- brows -->
+      <path d="M318 122 Q 332 114 346 120" fill="none" stroke="#1A1F36" stroke-width="5" stroke-linecap="round"/>
+      <path d="M356 120 Q 366 116 374 121" fill="none" stroke="#1A1F36" stroke-width="5" stroke-linecap="round"/>
+      <!-- eyes -->
+      <ellipse cx="332" cy="140" rx="5" ry="6.500" fill="#1A1F36"/>
+      <ellipse cx="364" cy="139" rx="5" ry="6.500" fill="#1A1F36"/>
+      <!-- nose -->
+      <path d="M350 146 Q 356 162 346 166" fill="none" stroke="#D6906A" stroke-width="4" stroke-linecap="round"/>
+      <!-- smile -->
+      <path d="M318 172 Q 344 204 374 168 Q 346 178 318 172 Z" fill="#FFFFFF" stroke="#B5654A" stroke-width="3" stroke-linejoin="round"/>
+    </g>
+
+    <!-- logo (top right, circle with white ring) -->
+    <circle cx="905" cy="100" r="84" fill="#FFFFFF"/>
+    <g transform="translate(905 100) scale(0.76) translate(-109 -108)">
+      <image href="logo.png" xlink:href="logo.png" x="0" y="0" width="218" height="216" clip-path="url(#clipLogo)"/>
+    </g>
+
+    <!-- headline -->
+    <rect x="596" y="196" width="356" height="72" rx="36" fill="#0E2F6B" opacity="0.18" transform="translate(0 6)"/>
+    <rect x="596" y="196" width="356" height="72" rx="36" fill="#FFFFFF"/>
+    <text x="774" y="251" text-anchor="middle" font-family="'Phetsarath OT','Noto Sans Lao','Saysettha OT','Leelawadee UI','Lao UI',sans-serif" font-weight="800" font-size="40" fill="#0E2F6B">ໜຶ່ງສັນຍາ</text>
+
+    <g font-family="'Phetsarath OT','Noto Sans Lao','Saysettha OT','Leelawadee UI','Lao UI',sans-serif" font-weight="900" text-anchor="middle">
+      <text x="814" y="372" font-size="96" fill="#0E2F6B">ທັງຄອບຄົວ</text>
+      <text x="810" y="366" font-size="96" fill="#FFFFFF">ທັງຄອບຄົວ</text>
+      <g transform="translate(790 456) skewX(-8)">
+        <text x="0" y="0" font-size="92" fill="#0E2F6B" stroke="#FFFFFF" stroke-width="12" stroke-linejoin="round" paint-order="stroke" text-anchor="middle">ອຸ່ນໃຈ</text>
+      </g>
+    </g>
+    <!-- swoosh underline -->
+    <path d="M640 488 C 770 500 900 480 1005 452" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+    <path d="M730 480 C 800 487 870 478 930 466" fill="none" stroke="#0E2F6B" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <!-- hearts -->
+    <g fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.9" stroke-linejoin="round">
+      <use href="#icHeart" xlink:href="#icHeart" transform="translate(560 380) scale(1.4) rotate(-12 12 12)"/>
+      <use href="#icHeart" xlink:href="#icHeart" transform="translate(1002 396) scale(1.3) rotate(12 12 12)"/>
+    </g>
+
+    <!-- social bar -->
+    <!-- reactions -->
+    <circle cx="66" cy="529" r="18" fill="#FFC72C" stroke="#FFFFFF" stroke-width="3"/>
+    <use href="#icHeart" xlink:href="#icHeart" transform="translate(54.500 517.500) scale(0.96)" fill="#0E2F6B"/>
+    <circle cx="96" cy="529" r="18" fill="#0E2F6B" stroke="#FFFFFF" stroke-width="3"/>
+    <use href="#icLike" xlink:href="#icLike" transform="translate(84.500 517.500) scale(0.96)" fill="#FFFFFF"/>
+    <text x="126" y="538" font-family="'Phetsarath OT','Noto Sans Lao','Leelawadee UI',sans-serif" font-size="26" fill="#4A5675">ທ່ານ ແລະ 10K ຄົນ</text>
+    <text x="1030" y="538" text-anchor="end" font-family="'Phetsarath OT','Noto Sans Lao','Leelawadee UI',sans-serif" font-size="26" fill="#4A5675">5.4K ຄຳເຫັນ   730 ແບ່ງປັນ</text>
+    <line x1="56" y1="562" x2="1024" y2="562" stroke="#DDE3EF" stroke-width="2"/>
+    <!-- buttons -->
+    <g font-family="'Phetsarath OT','Noto Sans Lao','Leelawadee UI',sans-serif" font-size="29" font-weight="800">
+      <circle cx="146" cy="600" r="17" fill="#FFC72C"/>
+      <use href="#icHeart" xlink:href="#icHeart" transform="translate(134 588) scale(1)" fill="#0E2F6B"/>
+      <text x="176" y="610" fill="#0E2F6B">ມັກ</text>
+      <use href="#icComment" xlink:href="#icComment" transform="translate(500 587) scale(1.1)" fill="none" stroke="#4A5675" stroke-width="2"/>
+      <text x="536" y="610" fill="#4A5675" font-weight="700">ຄຳເຫັນ</text>
+      <use href="#icShare" xlink:href="#icShare" transform="translate(770 587) scale(1.1)" fill="none" stroke="#4A5675" stroke-width="2" stroke-linejoin="round"/>
+      <text x="808" y="610" fill="#4A5675" font-weight="700">ແບ່ງປັນ</text>
+    </g>
+
+    <!-- contract booklet (breaks out of the card) -->
+    <g transform="translate(408 514) rotate(30)">
+      <rect x="-80" y="-60" width="160" height="120" rx="6" fill="#0A2455" transform="translate(6 8)" opacity="0.35"/>
+      <rect x="-80" y="-60" width="160" height="120" rx="6" fill="url(#gBlue)"/>
+      <rect x="-70" y="-50" width="140" height="100" rx="3" fill="none" stroke="#FFC72C" stroke-width="2" opacity="0.9"/>
+      <text x="-2" y="-22" text-anchor="middle" font-family="'Phetsarath OT','Noto Sans Lao','Leelawadee UI',sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">ສັນຍາປະກັນໄພຊີວິດ</text>
+      <circle cx="40" cy="26" r="24" fill="#FFC72C"/>
+      <circle cx="40" cy="26" r="17" fill="none" stroke="#0E2F6B" stroke-width="3"/>
+      <circle cx="40" cy="26" r="9" fill="none" stroke="#0E2F6B" stroke-width="3"/>
+    </g>
+
+    <!-- CARD 2 -->
+    <rect x="26" y="664" width="1028" height="500" rx="26" fill="#FFFFFF"/>
+
+    <!-- header -->
+    <circle cx="86" cy="720" r="38" fill="#FFFFFF"/>
+    <g clip-path="url(#clipAvatar)">
+      <rect x="40" y="680" width="90" height="80" fill="#FFE08A"/>
+      <path d="M52 762 L 54 738 C 56 728 70 726 74 726 C 82 726 88 730 88 738 L 90 762 Z" fill="#0E2F6B"/>
+      <circle cx="68" cy="714" r="10" fill="#F2B48C"/>
+      <path d="M58 712 C 58 703 78 702 78 712 C 72 708 64 708 58 712 Z" fill="#1A1F36"/>
+      <path d="M90 762 L 92 740 C 94 730 106 728 110 728 C 118 730 124 736 124 744 L 126 762 Z" fill="#FFC72C"/>
+      <circle cx="105" cy="720" r="9" fill="#F2B48C"/>
+      <path d="M96 720 C 94 706 116 704 114 720 C 110 712 100 712 96 720 Z" fill="#3A2418"/>
+      <path d="M76 762 L 78 748 C 79 742 92 742 93 748 L 95 762 Z" fill="#FFFFFF"/>
+      <circle cx="85" cy="738" r="7" fill="#F2B48C"/>
+    </g>
+    <text x="140" y="716" font-family="'Phetsarath OT','Noto Sans Lao','Leelawadee UI',sans-serif" font-size="30" font-weight="800" fill="#16203D">ຄອບຄົວສຸກໃຈ</text>
+    <text x="140" y="752" font-family="'Phetsarath OT','Noto Sans Lao','Leelawadee UI',sans-serif" font-size="22" fill="#6B7590">14 ມິຖຸນາ ເວລາ 09:00 ·</text>
+    <g transform="translate(400 738)" fill="none" stroke="#6B7590" stroke-width="2">
+      <circle cx="0" cy="0" r="9"/>
+      <ellipse cx="0" cy="0" rx="4" ry="9"/>
+      <line x1="-9" y1="0" x2="9" y2="0"/>
+    </g>
+    <g fill="#6B7590">
+      <circle cx="984" cy="722" r="4.500"/><circle cx="1000" cy="722" r="4.500"/><circle cx="1016" cy="722" r="4.500"/>
+    </g>
+
+    <!-- photo -->
+    <g clip-path="url(#clipPhoto)">
+      <rect x="26" y="766" width="1028" height="320" fill="url(#gWall)"/>
+      <!-- window glow -->
+      <rect x="560" y="770" width="230" height="130" rx="6" fill="#FFFFFF" opacity="0.75"/>
+      <rect x="672" y="770" width="8" height="130" fill="#FFE9A8"/>
+      <ellipse cx="700" cy="860" rx="220" ry="120" fill="url(#gGlow)" opacity="0.7"/>
+      <!-- shelf / plant hint -->
+      <rect x="990" y="800" width="64" height="12" fill="#FFD966"/>
+      <path d="M1010 800 C 1000 770 1020 760 1024 790 C 1030 760 1050 772 1040 800 Z" fill="#7FB069"/>
+      <!-- floor -->
+      <rect x="26" y="1040" width="1028" height="60" fill="#F5D98A"/>
+      <!-- sofa -->
+      <rect x="478" y="850" width="576" height="270" rx="44" fill="#DCE6F7"/>
+      <rect x="478" y="995" width="576" height="125" rx="32" fill="#C8D6F0"/>
+    </g>
+
+    <!-- FAMILY -->
+    <!-- father -->
+    <path d="M776 1100 L 788 880 C 794 836 840 816 886 816 C 942 816 986 840 992 892 L 1004 1100 Z" fill="#2C63C4"/>
+    <path d="M776 1100 L 788 880 C 792 850 810 834 830 826 C 812 860 806 960 812 1100 Z" fill="#1F4EA3" opacity="0.7"/>
+    <rect x="858" y="782" width="42" height="48" fill="#D9A07A"/>
+    <path d="M846 812 L 878 850 L 912 812 L 900 804 L 878 828 L 858 804 Z" fill="#1F4EA3"/>
+    <ellipse cx="838" cy="750" rx="7" ry="13" fill="#E7A37C"/>
+    <ellipse cx="880" cy="744" rx="42" ry="52" fill="#F0B48E"/>
+    <ellipse cx="921" cy="750" rx="7" ry="13" fill="#E7A37C"/>
+    <path d="M838 738 C 834 690 872 680 902 684 C 928 690 924 722 920 738 C 908 716 882 708 862 712 C 850 716 842 726 838 738 Z" fill="#1A1F36"/>
+    <path d="M858 730 Q 868 724 878 728" fill="none" stroke="#1A1F36" stroke-width="4" stroke-linecap="round"/>
+    <path d="M888 728 Q 898 724 906 730" fill="none" stroke="#1A1F36" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="868" cy="744" r="4" fill="#1A1F36"/>
+    <circle cx="897" cy="743" r="4" fill="#1A1F36"/>
+    <path d="M866 764 Q 882 786 902 762 Q 884 770 866 764 Z" fill="#FFFFFF" stroke="#B5654A" stroke-width="2.500" stroke-linejoin="round"/>
+
+    <!-- mother -->
+    <path d="M618 794 C 606 740 650 714 700 718 C 752 722 772 772 762 842 C 768 884 742 902 748 926 L 638 926 C 650 892 626 852 618 794 Z" fill="#3A2418"/>
+    <path d="M606 1100 L 616 902 C 620 866 660 848 702 848 C 748 848 778 872 782 912 L 794 1100 Z" fill="#FFC72C"/>
+    <path d="M606 1100 L 616 902 C 620 870 640 858 660 852 C 640 900 636 1000 642 1100 Z" fill="#E5A800" opacity="0.6"/>
+    <rect x="678" y="818" width="36" height="42" fill="#D9A07A"/>
+    <path d="M664 852 Q 696 884 730 852 Q 700 866 664 852 Z" fill="#E5A800"/>
+    <g transform="rotate(-12 698 792)">
+      <ellipse cx="698" cy="792" rx="40" ry="49" fill="#F2B48C"/>
+      <path d="M658 790 C 652 742 690 730 720 740 C 744 750 742 780 736 796 C 730 770 704 756 684 758 C 670 762 662 774 658 790 Z" fill="#3A2418"/>
+      <path d="M672 780 Q 684 774 694 778" fill="none" stroke="#3A2418" stroke-width="4" stroke-linecap="round"/>
+      <path d="M708 776 Q 720 772 728 778" fill="none" stroke="#3A2418" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="684" cy="790" r="4" fill="#1A1F36"/>
+      <circle cx="716" cy="789" r="4" fill="#1A1F36"/>
+      <path d="M682 806 Q 700 830 722 804 Q 702 812 682 806 Z" fill="#FFFFFF" stroke="#B5654A" stroke-width="2.500" stroke-linejoin="round"/>
+    </g>
+
+    <!-- child -->
+    <rect x="760" y="862" width="30" height="34" fill="#D9A07A"/>
+    <path d="M715 1100 L722 925 C725 895 750 885 775 885 C805 885 828 895 832 925 L840 1100 Z" fill="#F4F6FB"/>
+    <g clip-path="url(#clipChild)" fill="#7C97CC">
+      <rect x="700" y="912" width="160" height="14"/>
+      <rect x="700" y="944" width="160" height="14"/>
+      <rect x="700" y="976" width="160" height="14"/>
+      <rect x="700" y="1008" width="160" height="14"/>
+      <rect x="700" y="1040" width="160" height="14"/>
+    </g>
+    <g transform="rotate(-10 776 840)">
+      <circle cx="776" cy="840" r="38" fill="#F2B48C"/>
+      <path d="M738 838 C 732 802 764 794 790 800 C 812 806 814 826 812 840 C 806 820 786 814 768 818 C 752 822 742 828 738 838 Z" fill="#1A1F36"/>
+      <circle cx="762" cy="842" r="3.500" fill="#1A1F36"/>
+      <circle cx="790" cy="841" r="3.500" fill="#1A1F36"/>
+      <path d="M764 856 Q 776 872 792 855 Q 778 860 764 856 Z" fill="#FFFFFF" stroke="#B5654A" stroke-width="2" stroke-linejoin="round"/>
+    </g>
+    <!-- father's arm/hand on child's shoulder -->
+    <path d="M808 884 C 794 916 802 944 826 950" fill="none" stroke="#2C63C4" stroke-width="40" stroke-linecap="round"/>
+    <circle cx="832" cy="954" r="15" fill="#F0B48E"/>
+
+    <!-- swirl accents -->
+    <path d="M560 1046 C 640 1090 780 1092 900 1048" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+    <path d="M610 1064 C 690 1096 800 1092 880 1064" fill="none" stroke="#FFC72C" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- mother's raised arm reaching toward the contract -->
+    <path d="M652 896 C 616 880 598 830 592 764" fill="none" stroke="#FFC72C" stroke-width="48" stroke-linecap="round"/>
+    <path d="M652 896 C 616 880 598 830 592 764" fill="none" stroke="#E5A800" stroke-width="10" stroke-linecap="round" opacity="0.35" transform="translate(-14 0)"/>
+    <path d="M592 768 L 566 684" fill="none" stroke="#F2B48C" stroke-width="34" stroke-linecap="round"/>
+    <ellipse cx="560" cy="656" rx="19" ry="26" fill="#F2B48C" transform="rotate(-14 560 656)"/>
+    <g stroke="#F2B48C" stroke-width="9" stroke-linecap="round">
+      <line x1="548" y1="640" x2="540" y2="614"/>
+      <line x1="558" y1="634" x2="556" y2="606"/>
+      <line x1="569" y1="636" x2="574" y2="610"/>
+      <line x1="577" y1="646" x2="588" y2="624"/>
+      <line x1="543" y1="658" x2="524" y2="644"/>
+    </g>
+
+    <!-- speech bubble -->
+    <path d="M78 856 C 78 838 92 826 110 826 L 456 826 C 474 826 488 838 488 856 L 488 972 C 488 990 474 1002 456 1002 L 420 1002 L 522 1046 L 372 1002 L 110 1002 C 92 1002 78 990 78 972 Z" fill="#0E2F6B" opacity="0.25" transform="translate(6 10)"/>
+    <path d="M78 856 C 78 838 92 826 110 826 L 456 826 C 474 826 488 838 488 856 L 488 972 C 488 990 474 1002 456 1002 L 420 1002 L 522 1046 L 372 1002 L 110 1002 C 92 1002 78 990 78 972 Z" fill="url(#gBlue)" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round"/>
+    <!-- top pill -->
+    <rect x="132" y="784" width="270" height="62" rx="31" fill="#FFFFFF"/>
+    <text x="267" y="828" text-anchor="middle" font-family="'Phetsarath OT','Noto Sans Lao','Leelawadee UI',sans-serif" font-size="32" font-weight="800" fill="#0E2F6B">ຮ່ວມລໍຖ້າພ້ອມກັນ</text>
+    <!-- main line -->
+    <text x="283" y="905" text-anchor="middle" font-family="'Phetsarath OT','Noto Sans Lao','Leelawadee UI',sans-serif" font-size="44" font-weight="900" fill="#FFFFFF">ການປົກປ້ອງແບບໃໝ່</text>
+    <!-- bottom pill -->
+    <rect x="130" y="924" width="308" height="60" rx="30" fill="#FFC72C"/>
+    <text x="284" y="968" text-anchor="middle" font-family="'Phetsarath OT','Noto Sans Lao','Leelawadee UI',sans-serif" font-size="34" font-weight="900" fill="#0E2F6B">ໃກ້ເປີດຕົວແລ້ວ!</text>
+    <!-- sparkles -->
+    <g fill="#FFC72C">
+      <path d="M52 796 l4 -12 l4 12 l12 4 l-12 4 l-4 12 l-4 -12 l-12 -4 z"/>
+      <path d="M470 800 l4 -11 l4 11 l11 4 l-11 4 l-4 11 l-4 -11 l-11 -4 z"/>
+    </g>
+  </g>
+</svg>
