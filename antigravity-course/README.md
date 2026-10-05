@@ -18,6 +18,8 @@
 | [`proposal.pdf`](proposal.pdf) | ນັກຮຽນ | ບົດສະເໜີຫຼັກສູດ A4 ສຳລັບສົ່ງທາງ WhatsApp / Facebook ຫຼື ພິມ |
 | [`basic.md`](basic.md) | ຜູ້ສອນ | ແຜນການສອນ Basic ລະອຽດ, ຕົວຢ່າງຄຳສັ່ງ ແລະ ສິ່ງທີ່ຕ້ອງກຽມ |
 | [`advanced.md`](advanced.md) | ຜູ້ສອນ | ແຜນການສອນ Advanced ລະອຽດ, ຕົວຢ່າງ Rules, Red Flags ແລະ ສິ່ງທີ່ຕ້ອງກຽມ |
+| [`slides/Antigravity-Basic.pptx`](slides/Antigravity-Basic.pptx) | ຜູ້ສອນ | ສະໄລສອນ Basic 35 ສະໄລ ພ້ອມ Speaker Notes |
+| [`slides/Antigravity-Advanced.pptx`](slides/Antigravity-Advanced.pptx) | ຜູ້ສອນ | ສະໄລສອນ Advanced 43 ສະໄລ ພ້ອມ Speaker Notes |
 
 ## ຂໍ້ມູນທີ່ຕ້ອງເຕີມກ່ອນສົ່ງໃຫ້ນັກຮຽນ
 
