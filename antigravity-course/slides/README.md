@@ -4,9 +4,11 @@
 |---|---|---|
 | [`Antigravity-Basic.pptx`](Antigravity-Basic.pptx) | Basic · 4 ຊົ່ວໂມງ (2 ມື້) | 35 |
 | [`Antigravity-Advanced.pptx`](Antigravity-Advanced.pptx) | Advanced · 8 ຊົ່ວໂມງ (4 ມື້) | 43 |
+| [`Antigravity-Basic.pdf`](Antigravity-Basic.pdf) | Basic (PDF ສຳລັບແຈກ ຫຼື ພິມ) | 35 |
+| [`Antigravity-Advanced.pdf`](Antigravity-Advanced.pdf) | Advanced (PDF ສຳລັບແຈກ ຫຼື ພິມ) | 43 |
 
 - ແບ່ງເປັນ Section ຕາມມື້ຮຽນ. ທຸກສະໄລບອກມື້, ເວລາ ແລະ ຫົວຂໍ້ ຢູ່ມຸມຊ້າຍເທິງ.
-- ທຸກສະໄລມີ **Speaker Notes** ເປັນພາສາລາວ: ສິ່ງທີ່ຕ້ອງເວົ້າ, ກິດຈະກຳ ແລະ ເວລາ.
+- ທຸກສະໄລມີ **Speaker Notes** ເປັນພາສາລາວ: ສິ່ງທີ່ຕ້ອງເວົ້າ, ກິດຈະກຳ ແລະ ເວລາ (ມີສະເພາະໃນ .pptx, ບໍ່ມີໃນ PDF).
 - ສະໄລ Workshop ມີພື້ນສີເທົາ ແລະ ປ້າຍ WORKSHOP ສີເຫຼືອງ.
 - ຄຳສັ່ງ (Prompt) ໃນສະໄລ ກົງກັບ [`../basic.md`](../basic.md) ແລະ [`../advanced.md`](../advanced.md).
 
