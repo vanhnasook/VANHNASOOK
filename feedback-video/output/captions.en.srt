@@ -1,83 +1,83 @@
 1
-00:00:02,400 --> 00:00:10,064
+00:00:02,400 --> 00:00:12,072
 Hello! Lanexang Assurance will show you how to report a problem or send feedback on lap.com.la
 
 2
-00:00:10,514 --> 00:00:14,154
+00:00:12,522 --> 00:00:17,120
 Every piece of feedback helps us improve our service
 
 3
-00:00:16,454 --> 00:00:24,644
+00:00:19,420 --> 00:00:26,851
 Step 1: Open lap.com.la on your phone or computer
 
 4
-00:00:26,244 --> 00:00:32,823
+00:00:28,451 --> 00:00:35,030
 Step 2: Tap the “Report / Feedback” button at the bottom right of the screen
 
 5
-00:00:35,423 --> 00:00:39,070
+00:00:37,630 --> 00:00:41,278
 The “Feedback & Report Box” window will open
 
 6
-00:00:39,520 --> 00:00:45,873
+00:00:41,728 --> 00:00:48,080
 It is 100% safe and anonymous: your name and email are never recorded
 
 7
-00:00:46,323 --> 00:00:48,828
+00:00:48,530 --> 00:00:51,035
 Both customers and staff can use it
 
 8
-00:00:50,428 --> 00:00:54,400
+00:00:52,635 --> 00:00:56,607
 Step 3: Under “Who are you?”
 
 9
-00:00:54,850 --> 00:01:02,606
+00:00:57,057 --> 00:01:04,814
 choose Customer / Service user, LAP staff, or General public
 
 10
-00:01:04,406 --> 00:01:07,193
+00:01:06,614 --> 00:01:09,400
 Step 4: Choose the topic type
 
 11
-00:01:07,643 --> 00:01:12,868
+00:01:09,850 --> 00:01:15,075
 such as Feedback / Suggestion, or System / Service problem
 
 12
-00:01:13,318 --> 00:01:16,443
+00:01:15,525 --> 00:01:18,650
 Complaint / Conduct report, or Other
 
 13
-00:01:19,043 --> 00:01:22,194
+00:01:21,250 --> 00:01:24,402
 Step 5: Add a short subject
 
 14
-00:01:22,644 --> 00:01:28,760
+00:01:24,852 --> 00:01:30,967
 Then describe the details: what happened, where, or your suggestion
 
 15
-00:01:29,210 --> 00:01:32,895
+00:01:31,417 --> 00:01:35,102
 Fields marked with a red star are required
 
 16
-00:01:34,895 --> 00:01:42,559
+00:01:37,102 --> 00:01:44,767
 Step 6: If you have photos or documents as evidence, attach them (up to 10 MB)
 
 17
-00:01:44,259 --> 00:01:47,343
+00:01:46,467 --> 00:01:49,550
 Finally, tap “Send”
 
 18
-00:01:47,793 --> 00:01:51,710
+00:01:50,000 --> 00:01:53,918
 That's it: your feedback is on its way to us
 
 19
-00:01:54,910 --> 00:02:00,776
+00:01:57,118 --> 00:02:02,984
 For urgent help, call our 24-hour hotline 1819
 
 20
-00:02:01,226 --> 00:02:07,061
+00:02:03,434 --> 00:02:09,268
 or contact us on WhatsApp at 020 9855 6666
 
 21
-00:02:08,961 --> 00:02:12,372
+00:02:11,168 --> 00:02:14,579
 Lanexang Assurance: always beside you

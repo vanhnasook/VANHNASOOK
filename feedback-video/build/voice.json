@@ -1,17 +1,17 @@
 {
  "intro": {
-  "hash": "5a577e5d2d73",
+  "hash": "8160b8a85334",
   "model": "gemini-3.8-flash-tts",
   "durations": [
-   8.582,
-   4.069
+   10.822,
+   5.143
   ]
  },
  "step1": {
-  "hash": "f2ba12a0a3e4",
+  "hash": "00dee22d05bb",
   "model": "gemini-3.1-flash-tts-preview",
   "durations": [
-   9.155
+   8.322
   ]
  },
  "step2": {

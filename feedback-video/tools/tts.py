@@ -2,7 +2,8 @@
 """Generate the Lao voice-over with Gemini TTS and split it into caption lines.
 
 One request per scene (lines joined by line breaks); the scene audio is then cut
-at its longest pauses into one clip per caption line. Results are cached by text
+at its longest pauses into one clip per caption line. Each take is transcribed
+back with Gemini and re-recorded if any clip adds, drops or changes words. Results are cached by text
 hash in build/audio, so re-running only re-records scenes whose text changed.
 
 Pass scene ids to re-record just those scenes; every other scene keeps its
@@ -129,6 +130,28 @@ def split_lines(audio, texts):
     return clips
 
 
+def check_takes(clips, texts, key, model="gemini-3.8-flash"):
+    """Transcribe the clips and return a list of problems (empty when every clip reads its line)."""
+    parts = []
+    for i, c in enumerate(clips):
+        buf = io.BytesIO()
+        with wave.open(buf, "wb") as w:
+            w.setnchannels(1); w.setsampwidth(2); w.setframerate(RATE)
+            w.writeframes((np.clip(c, -1, 1) * 32767).astype(np.int16).tobytes())
+        parts += [{"text": f"Clip {i}:"}, {"inlineData": {"mimeType": "audio/wav", "data": base64.b64encode(buf.getvalue()).decode()}}]
+    parts.append({"text": "Transcribe each Lao clip and compare it with its expected text (spoken forms of numbers are fine). "
+                          "A clip fails if it adds, drops, repeats or changes words, or reads any instructions aloud. "
+                          'Return JSON only: [{"clip": 0, "ok": true, "problem": ""}].\n\nExpected:\n'
+                          + "\n".join(f"Clip {i}: {t}" for i, t in enumerate(texts))})
+    req = urllib.request.Request(
+        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+        data=json.dumps({"contents": [{"parts": parts}], "generationConfig": {"responseMimeType": "application/json"}}).encode(),
+        headers={"Content-Type": "application/json", "x-goog-api-key": key})
+    with urllib.request.urlopen(req, timeout=300) as r:
+        rows = json.loads(json.load(r)["candidates"][0]["content"]["parts"][-1]["text"])
+    return [f"clip {row['clip']}: {row.get('problem')}" for row in rows if not row.get("ok")]
+
+
 def main():
     script = json.loads((ROOT / "script.json").read_text())
     OUT.mkdir(parents=True, exist_ok=True)
@@ -149,15 +172,24 @@ def main():
             continue
         print(f"[tts] {scene['id']} ({len(texts)} lines)")
         clips = None
-        for _ in range(2):
-            audio, model = request_tts(prompt, script["voice"], key)
-            clips = split_lines(audio, texts)
-            if clips:
+        for attempt in range(4):
+            if scene.get("per_line"):  # one request per line: no pause-based cutting
+                takes = [request_tts(script["style"] + "\n\n" + t, script["voice"], key) for t in texts]
+                clips, model = [trim(a) for a, _ in takes], takes[-1][1]
+                audio = np.concatenate(clips)
+            else:
+                audio, model = request_tts(prompt, script["voice"], key)
+                clips = split_lines(audio, texts)
+            if not clips:
+                print("  could not split scene into lines, re-recording", file=sys.stderr)
+                continue
+            problems = check_takes(clips, texts, key)
+            if not problems:
                 break
-            print("  could not split scene into lines, re-recording", file=sys.stderr)
+            print(f"  take {attempt + 1} rejected: {problems}", file=sys.stderr)
+            clips = None
         if not clips:
-            print("  falling back to one request per line", file=sys.stderr)
-            clips = [trim(request_tts(script["style"] + "\n\n" + t, script["voice"], key)[0]) for t in texts]
+            sys.exit(f"{scene['id']}: no clean take after 4 attempts; keeping the previous audio")
         save_wav(OUT / f"{scene['id']}.full.wav", audio)
         durations = []
         for i, c in enumerate(clips):
