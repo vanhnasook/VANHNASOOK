@@ -25,8 +25,15 @@ the anonymous **ກ່ອງຮັບຄຳຄິດເຫັນ & ແຈ້ງ�
    panels are vector overlays drawn in the screenshot's own coordinates.
 5. **Render**: `tools/render.mjs` seeks the page frame by frame in headless Chromium and encodes
    with ffmpeg (`build/video.mp4`). It also exports the sound-effect cue times.
-6. **Sound**: `tools/mix.py` synthesises the music bed and sound effects, ducks the music under the
-   voice, normalises to −16 LUFS and muxes the final MP4 with subtitle tracks.
+6. **Sound**: `tools/mix.py` uses `assets/music/background.mp3` as the music bed (levelled and faded
+   out; it falls back to a synthesised bed if the file is missing), adds synthesised sound effects,
+   ducks the music under the voice, normalises to −16 LUFS and muxes the final MP4 with subtitle tracks.
+
+Look: the brand yellow from the logo (`#FEC215`) leads, with the logo blue (`#007DC5`) for
+accents; colour tokens are at the top of `src/style.css`. The logo is `assets/logo.svg`.
+
+The background track is a licensed Epidemic Sound file supplied for this video, so it is kept out
+of git (`.gitignore`); put it back at `assets/music/background.mp3` before rebuilding.
 
 ## Rebuild
 

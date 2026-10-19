@@ -39,19 +39,20 @@ const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>':
 function buildBackground() {
   $('#bg').innerHTML = `<svg width="1920" height="1080" viewBox="0 0 1920 1080">
     <defs>
-      <pattern id="dotp" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="3" fill="#08355e"/></pattern>
-      <radialGradient id="goldg"><stop offset="0" stop-color="#ffd35a" stop-opacity=".55"/><stop offset="1" stop-color="#f2b318" stop-opacity="0"/></radialGradient>
-      <radialGradient id="blueg"><stop offset="0" stop-color="#7fb0f0" stop-opacity=".35"/><stop offset="1" stop-color="#7fb0f0" stop-opacity="0"/></radialGradient>
+      <pattern id="dotp" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="3" fill="#ffffff"/></pattern>
+      <radialGradient id="goldg"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+      <radialGradient id="blueg"><stop offset="0" stop-color="#fff3c4" stop-opacity=".8"/><stop offset="1" stop-color="#fff3c4" stop-opacity="0"/></radialGradient>
     </defs>
-    <g class="drift" data-a="22" data-s=".11" data-p="0"><circle cx="1800" cy="1000" r="420" fill="url(#goldg)"/></g>
+    <g class="drift" data-a="22" data-s=".11" data-p="0"><circle cx="1400" cy="520" r="620" fill="url(#goldg)"/></g>
+    <g class="drift" data-a="18" data-s=".07" data-p="9"><circle cx="1860" cy="1060" r="300" fill="#f0a800" opacity=".35"/></g>
     <g class="drift" data-a="18" data-s=".08" data-p="2"><circle cx="160" cy="140" r="380" fill="url(#blueg)"/></g>
-    <g class="drift" data-a="12" data-s=".14" data-p="1"><circle cx="120" cy="330" r="130" fill="none" stroke="#f2b318" stroke-width="4" stroke-dasharray="3 16" stroke-linecap="round" opacity=".8"/></g>
-    <g class="drift" data-a="16" data-s=".1" data-p="4"><circle cx="880" cy="980" r="70" fill="none" stroke="#0b4f8c" stroke-width="3" opacity=".12"/></g>
-    <g class="drift" data-a="10" data-s=".12" data-p="3"><rect x="1560" y="760" width="290" height="190" fill="url(#dotp)" opacity=".09"/></g>
-    <g class="drift" data-a="10" data-s=".09" data-p="5"><rect x="70" y="560" width="210" height="300" fill="url(#dotp)" opacity=".07"/></g>
-    <g class="drift" data-a="20" data-s=".17" data-p="6" stroke="#f2b318" stroke-width="5" stroke-linecap="round"><path d="M920 120v34M903 137h34"/></g>
-    <g class="drift" data-a="20" data-s=".15" data-p="7" stroke="#225bde" stroke-width="4" stroke-linecap="round" opacity=".35"><path d="M1860 560v26M1847 573h26"/></g>
-    <g class="drift" data-a="14" data-s=".2" data-p="8"><circle cx="230" cy="1000" r="10" fill="#f2b318" opacity=".7"/></g>
+    <g class="drift" data-a="12" data-s=".14" data-p="1"><circle cx="120" cy="330" r="130" fill="none" stroke="#ffffff" stroke-width="4" stroke-dasharray="3 16" stroke-linecap="round" opacity=".9"/></g>
+    <g class="drift" data-a="16" data-s=".1" data-p="4"><circle cx="880" cy="980" r="70" fill="none" stroke="#ffffff" stroke-width="3" opacity=".5"/></g>
+    <g class="drift" data-a="10" data-s=".12" data-p="3"><rect x="1560" y="760" width="290" height="190" fill="url(#dotp)" opacity=".45"/></g>
+    <g class="drift" data-a="10" data-s=".09" data-p="5"><rect x="70" y="560" width="210" height="300" fill="url(#dotp)" opacity=".4"/></g>
+    <g class="drift" data-a="20" data-s=".17" data-p="6" stroke="#ffffff" stroke-width="5" stroke-linecap="round"><path d="M920 120v34M903 137h34"/></g>
+    <g class="drift" data-a="20" data-s=".15" data-p="7" stroke="#007dc5" stroke-width="4" stroke-linecap="round" opacity=".55"><path d="M1860 560v26M1847 573h26"/></g>
+    <g class="drift" data-a="14" data-s=".2" data-p="8"><circle cx="230" cy="1000" r="10" fill="#007dc5" opacity=".6"/></g>
   </svg>`;
   const groups = $$('#bg .drift');
   updaters.push((t) => {
@@ -129,7 +130,7 @@ function buildPanels() {
       </div>
       <div class="stack">
         <div class="fab later" id="fab"><div class="ci">${icon('chat')}</div>ແຈ້ງບັນຫາ / ຄຳເຫັນ</div>
-        <div class="sub later" id="cornerTxt" style="font-size:34px;font-weight:700;color:var(--ink)">${icon('arrowRight', '', 'style="display:inline;font-size:30px;vertical-align:-4px;color:var(--gold-deep);transform:rotate(45deg)"')} ຢູ່ມຸມຂວາລຸ່ມຂອງໜ້າຈໍ</div>
+        <div class="sub later" id="cornerTxt" style="font-size:34px;font-weight:700;color:var(--ink)">${icon('arrowRight', '', 'style="display:inline;font-size:30px;vertical-align:-4px;color:var(--logo-blue);transform:rotate(45deg)"')} ຢູ່ມຸມຂວາລຸ່ມຂອງໜ້າຈໍ</div>
       </div>
     </div>
   </div>
@@ -218,7 +219,7 @@ function buildPanels() {
     <div class="row">
       <div class="ccard" id="cc1" style="--c:#0b4f8c"><div class="ci">${icon('headset')}</div><div class="k">ສາຍດ່ວນ 24 ຊົ່ວໂມງ</div><div class="v">1819</div></div>
       <div class="ccard" id="cc2" style="--c:#1fb855"><div class="ci">${icon('whatsapp')}</div><div class="k latin">WhatsApp</div><div class="v sm">020 9855 6666</div></div>
-      <div class="ccard" id="cc3" style="--c:#f2b318"><div class="ci">${icon('globe')}</div><div class="k">ເວັບໄຊ</div><div class="v sm">lap.com.la</div></div>
+      <div class="ccard" id="cc3" style="--c:#f0a800"><div class="ci">${icon('globe')}</div><div class="k">ເວັບໄຊ</div><div class="v sm">lap.com.la</div></div>
     </div>`;
 
   $('#plane').innerHTML = icon('send');
@@ -228,7 +229,7 @@ function buildPanels() {
 function buildHud() {
   const nodes = [1, 2, 3, 4, 5, 6, 7].map((n) => `<div class="n" data-n="${n}"><b>${n}</b>${icon('check')}</div>`).join('<div class="l"><i></i></div>');
   $('#hud').innerHTML = `
-    <div id="logoPill"><img src="assets/logo-wide.png" alt=""></div>
+    <div id="logoPill"><img src="assets/logo.svg" alt=""></div>
     <div id="tracker">${nodes}</div>`;
   const stepOf = { step1: 1, step2: 2, form: 2, step3: 3, step4: 4, step5: 5, step6: 6, step7: 7, outro: 8 };
   const ns = $$('#tracker .n'), ls = $$('#tracker .l i');
@@ -249,9 +250,9 @@ function buildIntro() {
   const r = rng(7);
   const dots = Array.from({ length: 46 }, () => ({ x: r() * 1920, y: r() * 1080, s: 2 + r() * 5, v: 20 + r() * 50, p: r() * 6 }));
   $('#intro').innerHTML = `
-    <svg class="fx" width="1920" height="1080">${[0, 1, 2, 3].map(() => '<circle class="rg" cx="960" cy="330" fill="none" stroke="#f2b318" stroke-width="3"/>').join('')}
-      ${dots.map(() => '<circle class="pt" fill="#ffd35a"/>').join('')}</svg>
-    <div class="logoDisc" id="iLogo" style="top:150px"><img src="assets/logo-wide.png" alt=""></div>
+    <svg class="fx" width="1920" height="1080">${[0, 1, 2, 3].map(() => '<circle class="rg" cx="960" cy="320" fill="none" stroke="#ffffff" stroke-width="3"/>').join('')}
+      ${dots.map(() => '<circle class="pt" fill="#ffffff"/>').join('')}</svg>
+    <div class="logoDisc" id="iLogo" style="top:130px"><img src="assets/logo.svg" alt=""></div>
     <div class="introTitle" id="iTitle" style="top:575px">ວິທີແຈ້ງບັນຫາ <span class="g">ແລະ</span> ສົ່ງຄຳຄິດເຫັນ</div>
     <div class="underline" id="iLine" style="top:700px"></div>
     <div class="urlPill" id="iUrl" style="top:740px">${icon('globe')} ຜ່ານເວັບໄຊ lap.com.la</div>
@@ -263,8 +264,8 @@ function buildIntro() {
       <div class="it" id="im3"><div class="c">${icon('star')}</div>ບໍລິການດີຂຶ້ນ</div>
     </div>`;
   $('#endcard').innerHTML = `
-    <svg class="fx" width="1920" height="1080">${[0, 1, 2, 3].map(() => '<circle class="rg" cx="960" cy="330" fill="none" stroke="#f2b318" stroke-width="3"/>').join('')}</svg>
-    <div class="logoDisc" id="eLogo" style="top:150px"><img src="assets/logo-wide.png" alt=""></div>
+    <svg class="fx" width="1920" height="1080">${[0, 1, 2, 3].map(() => '<circle class="rg" cx="960" cy="320" fill="none" stroke="#ffffff" stroke-width="3"/>').join('')}</svg>
+    <div class="logoDisc" id="eLogo" style="top:130px"><img src="assets/logo.svg" alt=""></div>
     <div class="slogan" id="eSlogan" style="top:590px"><div class="lo">ຄຽງຄູ່ທ່ານ ຕະຫຼອດເວລາ</div><div class="en">Always beside you</div></div>
     <div class="endInfo" id="eInfo"><span>${icon('globe')} lap.com.la</span><span>${icon('headset')} ສາຍດ່ວນ 1819</span><span>${icon('whatsapp')} 020 9855 6666</span></div>`;
 
@@ -358,7 +359,7 @@ function svgEl(parent, tag, attrs) {
 }
 
 // Gold outline that draws itself around a box, optionally pulses, then fades.
-function ring([x1, y1, x2, y2], t, { hold = 1.6, pad = 10, rx, pulse = true, color = '#f2b318' } = {}) {
+function ring([x1, y1, x2, y2], t, { hold = 1.6, pad = 10, rx, pulse = true, color = '#fec215' } = {}) {
   const g = svgEl($('#rings'), 'g', {});
   const box = { x: x1 - pad, y: y1 - pad, width: x2 - x1 + 2 * pad, height: y2 - y1 + 2 * pad, rx: rx ?? Math.min(60, (y2 - y1) / 2 + pad) };
   const glow = svgEl(g, 'rect', { ...box, fill: 'none', stroke: color, 'stroke-width': 26, opacity: 0 });
@@ -375,7 +376,7 @@ function ringOff(g, t) { tl.to(g, { opacity: 0, duration: .35 }, t); }
 
 function ripple(x, y, t) {
   for (let k = 0; k < 2; k++) {
-    const c = svgEl($('#fxsvg'), 'circle', { cx: x, cy: y, r: 10, fill: 'none', stroke: k ? '#ffffff' : '#f2b318', 'stroke-width': 12, opacity: 0 });
+    const c = svgEl($('#fxsvg'), 'circle', { cx: x, cy: y, r: 10, fill: 'none', stroke: k ? '#ffffff' : '#fec215', 'stroke-width': 12, opacity: 0 });
     tl.set(c, { opacity: 1 }, t + k * .12);
     tl.to(c, { attr: { r: 130 }, opacity: 0, duration: .7, ease: 'power2.out' }, t + k * .12);
   }
@@ -410,8 +411,8 @@ function panelOut(id, t) {
 }
 // highlight a panel card (gold border + glow) for a while
 function cardOn(sel, t, hold = 1.4) {
-  tl.to(sel, { boxShadow: '0 18px 40px rgba(34,91,222,.22), inset 0 0 0 5px #f2b318', scale: 1.03, duration: .3 }, t);
-  if (hold !== Infinity) tl.to(sel, { boxShadow: '0 14px 34px rgba(8,53,94,.10), inset 0 0 0 2px rgba(200,218,240,.6)', scale: 1, duration: .4 }, t + hold);
+  tl.to(sel, { boxShadow: '0 18px 40px rgba(0,125,197,.30), inset 0 0 0 5px #007dc5', scale: 1.03, duration: .3 }, t);
+  if (hold !== Infinity) tl.to(sel, { boxShadow: '0 14px 34px rgba(150,95,0,.16), inset 0 0 0 2px rgba(255,255,255,0)', scale: 1, duration: .4 }, t + hold);
 }
 function tick(sel, t) {
   tl.fromTo(`${sel} .tick`, { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: .45, ease: 'back.out(2.5)', immediateRender: false }, t);
@@ -484,7 +485,7 @@ function sceneStep2() {
   pop('#fab', at(l, 'ກົດປຸ່ມ'));
   pop('#mini', at(l, 'ມຸມຂວາລຸ່ມ') - .2);
   pop('#cornerTxt', at(l, 'ມຸມຂວາລຸ່ມ'));
-  tl.to('#miniDot', { boxShadow: '0 0 0 18px rgba(242,179,24,0)', duration: .9, repeat: 3, ease: 'power1.out' }, at(l, 'ມຸມຂວາລຸ່ມ'));
+  tl.to('#miniDot', { boxShadow: '0 0 0 18px rgba(0,125,197,0)', duration: .9, repeat: 3, ease: 'power1.out' }, at(l, 'ມຸມຂວາລຸ່ມ'));
   tap(946, 2485, l.end - .35, { travel: .8 });
   tl.to('#fab', { scale: .94, duration: .1, yoyo: true, repeat: 1 }, l.end - .4);
 }
@@ -518,8 +519,8 @@ function sceneForm() {
   tick('.w2a', at(l2, 'ລູກຄ້າ') + .3);
   pop('.w2b', at(l2, 'ພະນັກງານ'));
   tick('.w2b', at(l2, 'ພະນັກງານ') + .3);
-  ring([748, 584, 840, 636], at(l2, 'ລູກຄ້າ') - .1, { hold: s.end - at(l2, 'ລູກຄ້າ') - .9, pad: 8, pulse: false });
-  ring([924, 584, 1076, 636], at(l2, 'ພະນັກງານ') - .1, { hold: s.end - at(l2, 'ພະນັກງານ') - .9, pad: 8, pulse: false });
+  ring([750, 546, 839, 592], at(l2, 'ລູກຄ້າ') - .1, { hold: s.end - at(l2, 'ລູກຄ້າ') - .9, pad: 8, pulse: false });
+  ring([922, 548, 1087, 593], at(l2, 'ພະນັກງານ') - .1, { hold: s.end - at(l2, 'ພະນັກງານ') - .9, pad: 8, pulse: false });
 }
 
 function sceneStep3() {

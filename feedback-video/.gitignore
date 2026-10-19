@@ -10,3 +10,5 @@ build/mix_raw.wav
 build/mix.wav
 build/render.log
 __pycache__/
+assets/music/*.mp3
+output/voice-samples/

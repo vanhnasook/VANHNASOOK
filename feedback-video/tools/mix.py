@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Build the soundtrack and mux the final video.
 
-- background music: synthesised here (soft pad, marimba arpeggio, bass, shaker)
+- background music: assets/music/background.mp3 when present (levelled, faded
+  out at the end); otherwise synthesised here (soft pad, marimba, bass, shaker)
 - sound effects: synthesised, placed at the cue times the page exported (build/sfx.json)
 - voice: the timed clips from build/timeline.json; music ducks under the voice
 - loudness: two-pass EBU R128 normalisation to -16 LUFS
@@ -256,13 +257,20 @@ def main():
             i = int(line['start'] * SR)
             voice[i:i + len(clip)] += clip[: n - i]
 
-    music_path = ROOT / 'build/music.wav'
-    meta = ROOT / 'build/music.json'
-    if not music_path.exists() or not meta.exists() or json.loads(meta.read_text()).get('duration') != dur:
-        print('synthesising music...')
-        write_wav(music_path, music(dur))
-        meta.write_text(json.dumps({'duration': dur}))
-    m = np.frombuffer(subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', str(music_path), '-f', 'f32le', '-ac', '2', '-ar', str(SR), '-'],
+    track = ROOT / 'assets/music/background.mp3'
+    if track.exists():
+        # supplied track: from 0:00, dynamics evened out, faded out at the end
+        fade = f'afade=t=out:st={dur - 3.5:.2f}:d=3.5'
+        music_src, music_af = track, f'atrim=0:{dur:.3f},dynaudnorm=f=1000:g=31:m=4:p=.9,{fade}'
+    else:
+        music_src, music_af = ROOT / 'build/music.wav', 'anull'
+        meta = ROOT / 'build/music.json'
+        if not music_src.exists() or not meta.exists() or json.loads(meta.read_text()).get('duration') != dur:
+            print('synthesising music...')
+            write_wav(music_src, music(dur))
+            meta.write_text(json.dumps({'duration': dur}))
+    m = np.frombuffer(subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', str(music_src), '-af', music_af,
+                                      '-f', 'f32le', '-ac', '2', '-ar', str(SR), '-'],
                                      capture_output=True, check=True).stdout, dtype=np.float32).reshape(-1, 2).astype(float)[:n]
     m = np.vstack([m, np.zeros((n - len(m), 2))])
     m = np.stack([music_eq(m[:, 0]), music_eq(m[:, 1])], axis=1)
@@ -271,12 +279,12 @@ def main():
     hop = int(.02 * SR)
     act = np.repeat((np.sqrt((voice[: n // hop * hop].reshape(-1, hop) ** 2).mean(axis=1)) > .01).astype(float), hop)
     act = np.concatenate([act, np.zeros(n - len(act))])
-    k = int(.5 * SR)
+    k = int(.9 * SR)  # slow, smooth ducking
     act = np.convolve(act, np.ones(k) / k, mode='same')
     act = np.clip(act * 1.6, 0, 1)
-    m *= (1 - .45 * act)[:, None]
     music_rms = np.sqrt((m ** 2).mean())
     m *= 10 ** (-27 / 20) / max(music_rms, 1e-9)
+    m *= (1 - .6 * act)[:, None]  # about -8 dB while the narrator speaks
 
     fx = make_sfx()
     sfx = np.zeros((n, 2))
