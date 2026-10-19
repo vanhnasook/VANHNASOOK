@@ -1,0 +1,12 @@
+node_modules/
+build/stills/
+build/segments/
+build/audio/tempo-*/
+build/audio/*.full.wav
+build/*.mp4
+build/music.wav
+build/music.json
+build/mix_raw.wav
+build/mix.wav
+build/render.log
+__pycache__/

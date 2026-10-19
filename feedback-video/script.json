@@ -1,0 +1,221 @@
+{
+  "title": "ວິທີແຈ້ງບັນຫາ ແລະ ສົ່ງຄຳຄິດເຫັນ ຜ່ານເວັບໄຊ lap.com.la",
+  "voice": "Kore",
+  "style": "Read aloud, word for word, exactly the Lao text below and nothing else: no introduction, no extra words. Voice: warm, friendly, clear and professional female customer-service narrator, calm moderate pace, like a corporate tutorial video. Pause briefly at each blank line. Text:",
+  "tts_replace": [
+    [
+      "lap.com.la",
+      "ແລັບ ດັອດ ຄອມ ດັອດ ແອວເອ"
+    ],
+    [
+      "LAP",
+      "ແອວ ເອ ພີ"
+    ],
+    [
+      "100%",
+      "ຮ້ອຍເປີເຊັນ"
+    ],
+    [
+      "10 MB",
+      "ສິບ ເມັກກະໄບ"
+    ],
+    [
+      "020 9855 6666",
+      "ສູນ ສອງ ສູນ, ເກົ້າ ແປດ ຫ້າ ຫ້າ, ຫົກ ຫົກ ຫົກ ຫົກ"
+    ],
+    [
+      "1819",
+      "ໜຶ່ງ ແປດ ໜຶ່ງ ເກົ້າ"
+    ],
+    [
+      "24 ຊົ່ວໂມງ",
+      "ຊາວສີ່ ຊົ່ວໂມງ"
+    ],
+    [
+      "WhatsApp",
+      "ວັອດແອັບ"
+    ],
+    [
+      " / ",
+      ", "
+    ],
+    [
+      "/",
+      ", "
+    ],
+    [
+      "“",
+      ""
+    ],
+    [
+      "”",
+      ""
+    ],
+    [
+      "&",
+      "ແລະ"
+    ]
+  ],
+  "gap": 0.45,
+  "voice_tempo": 1.12,
+  "scenes": [
+    {
+      "id": "intro",
+      "lead": 2.4,
+      "tail": 0.9,
+      "lines": [
+        {
+          "lo": "ສະບາຍດີ! ລ້ານຊ້າງປະກັນໄພ ຂໍແນະນຳວິທີແຈ້ງບັນຫາ ແລະ ສົ່ງຄຳຄິດເຫັນ ຜ່ານເວັບໄຊ lap.com.la",
+          "en": "Hello! Lanexang Assurance will show you how to report a problem or send feedback on lap.com.la"
+        },
+        {
+          "lo": "ທຸກຄຳຄິດເຫັນຂອງທ່ານ ຊ່ວຍໃຫ້ພວກເຮົາ ປັບປຸງການບໍລິການໃຫ້ດີຂຶ້ນ",
+          "en": "Every piece of feedback helps us improve our service"
+        }
+      ]
+    },
+    {
+      "id": "step1",
+      "lead": 1.4,
+      "tail": 0.8,
+      "lines": [
+        {
+          "lo": "ຂັ້ນຕອນທີ 1: ເປີດເວັບໄຊ lap.com.la ຜ່ານໂທລະສັບ ຫຼື ຄອມພິວເຕີ",
+          "en": "Step 1: Open lap.com.la on your phone or computer"
+        }
+      ]
+    },
+    {
+      "id": "step2",
+      "lead": 0.8,
+      "tail": 1.2,
+      "lines": [
+        {
+          "lo": "ຂັ້ນຕອນທີ 2: ກົດປຸ່ມ “ແຈ້ງບັນຫາ / ຄຳເຫັນ” ທີ່ຢູ່ມຸມຂວາລຸ່ມຂອງໜ້າຈໍ",
+          "en": "Step 2: Tap the “Report / Feedback” button at the bottom right of the screen"
+        }
+      ]
+    },
+    {
+      "id": "form",
+      "lead": 1.4,
+      "tail": 0.6,
+      "lines": [
+        {
+          "lo": "ໜ້າຕ່າງ “ກ່ອງຮັບຄຳຄິດເຫັນ & ແຈ້ງບັນຫາ” ຈະເປີດຂຶ້ນ",
+          "en": "The “Feedback & Report Box” window will open"
+        },
+        {
+          "lo": "ລະບົບນີ້ປອດໄພ 100% ແລະ ບໍ່ລະບຸຕົວຕົນ ບໍ່ມີການບັນທຶກຊື່ ຫຼື ອີເມວຂອງທ່ານ",
+          "en": "It is 100% safe and anonymous: your name and email are never recorded"
+        },
+        {
+          "lo": "ສາມາດສົ່ງໄດ້ທັງລູກຄ້າ ແລະ ພະນັກງານ",
+          "en": "Both customers and staff can use it"
+        }
+      ]
+    },
+    {
+      "id": "step3",
+      "lead": 1.0,
+      "tail": 0.8,
+      "lines": [
+        {
+          "lo": "ຂັ້ນຕອນທີ 3: ໃນຫົວຂໍ້ “ທ່ານແມ່ນໃຜ?”",
+          "en": "Step 3: Under “Who are you?”"
+        },
+        {
+          "lo": "ໃຫ້ເລືອກ ລູກຄ້າ / ຜູ້ໃຊ້ບໍລິການ, ພະນັກງານ LAP ຫຼື ບຸກຄົນທົ່ວໄປ",
+          "en": "choose Customer / Service user, LAP staff, or General public"
+        }
+      ]
+    },
+    {
+      "id": "step4",
+      "lead": 1.0,
+      "tail": 1.6,
+      "lines": [
+        {
+          "lo": "ຂັ້ນຕອນທີ 4: ເລືອກປະເພດເລື່ອງ",
+          "en": "Step 4: Choose the topic type"
+        },
+        {
+          "lo": "ເຊັ່ນ: ຄຳຕິຊົມ / ສະເໜີແນະ, ແຈ້ງບັນຫາລະບົບ/ບໍລິການ",
+          "en": "such as Feedback / Suggestion, or System / Service problem"
+        },
+        {
+          "lo": "ແຈ້ງຂໍ້ຮ້ອງຮຽນ / ພຶດຕິກຳ ຫຼື ອື່ນໆ",
+          "en": "Complaint / Conduct report, or Other"
+        }
+      ]
+    },
+    {
+      "id": "step5",
+      "lead": 1.0,
+      "tail": 1.0,
+      "lines": [
+        {
+          "lo": "ຂັ້ນຕອນທີ 5: ໃສ່ຫົວຂໍ້ເລື່ອງສັ້ນໆ",
+          "en": "Step 5: Add a short subject"
+        },
+        {
+          "lo": "ແລ້ວຂຽນລາຍລະອຽດ ເຊັ່ນ ເຫດການ, ສະຖານທີ່ ຫຼື ຂໍ້ສະເໜີຂອງທ່ານ",
+          "en": "Then describe the details: what happened, where, or your suggestion"
+        },
+        {
+          "lo": "ຊ່ອງທີ່ມີເຄື່ອງໝາຍດາວສີແດງ ແມ່ນຈຳເປັນຕ້ອງປ້ອນຂໍ້ມູນ",
+          "en": "Fields marked with a red star are required"
+        }
+      ]
+    },
+    {
+      "id": "step6",
+      "lead": 1.0,
+      "tail": 0.9,
+      "lines": [
+        {
+          "lo": "ຂັ້ນຕອນທີ 6: ຖ້າມີຮູບພາບ ຫຼື ເອກະສານຫຼັກຖານ ສາມາດແນບໄຟລ໌ໄດ້ ສູງສຸດ 10 MB",
+          "en": "Step 6: If you have photos or documents as evidence, attach them (up to 10 MB)"
+        }
+      ]
+    },
+    {
+      "id": "step7",
+      "lead": 0.8,
+      "tail": 2.0,
+      "lines": [
+        {
+          "lo": "ສຸດທ້າຍ ກົດປຸ່ມ “ສົ່ງຂໍ້ມູນ”",
+          "en": "Finally, tap “Send”"
+        },
+        {
+          "lo": "ພຽງເທົ່ານີ້ ຄຳຄິດເຫັນຂອງທ່ານ ກໍຈະສົ່ງເຖິງພວກເຮົາ",
+          "en": "That's it: your feedback is on its way to us"
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "lead": 1.2,
+      "tail": 3.2,
+      "gaps": [
+        0.45,
+        1.9
+      ],
+      "lines": [
+        {
+          "lo": "ຖ້າຕ້ອງການຄວາມຊ່ວຍເຫຼືອດ່ວນ ໂທສາຍດ່ວນ 24 ຊົ່ວໂມງ 1819",
+          "en": "For urgent help, call our 24-hour hotline 1819"
+        },
+        {
+          "lo": "ຫຼື ຕິດຕໍ່ທາງ WhatsApp 020 9855 6666",
+          "en": "or contact us on WhatsApp at 020 9855 6666"
+        },
+        {
+          "lo": "ລ້ານຊ້າງປະກັນໄພ ຄຽງຄູ່ທ່ານ ຕະຫຼອດເວລາ",
+          "en": "Lanexang Assurance: always beside you"
+        }
+      ]
+    }
+  ]
+}

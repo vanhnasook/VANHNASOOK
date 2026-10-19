@@ -1,0 +1,83 @@
+{
+ "intro": {
+  "hash": "5a577e5d2d73",
+  "model": "gemini-3.8-flash-tts",
+  "durations": [
+   8.582,
+   4.069
+  ]
+ },
+ "step1": {
+  "hash": "f2ba12a0a3e4",
+  "model": "gemini-3.1-flash-tts-preview",
+  "durations": [
+   9.155
+  ]
+ },
+ "step2": {
+  "hash": "32370d7ab351",
+  "model": "gemini-3.8-flash-tts",
+  "durations": [
+   7.37
+  ]
+ },
+ "form": {
+  "hash": "aa0a5076bfca",
+  "model": "gemini-3.8-flash-tts",
+  "durations": [
+   4.075,
+   7.108,
+   2.806
+  ]
+ },
+ "step3": {
+  "hash": "46ccbad90f74",
+  "model": "gemini-3.1-flash-tts-preview",
+  "durations": [
+   4.446,
+   8.681
+  ]
+ },
+ "step4": {
+  "hash": "613ce4e25709",
+  "model": "gemini-3.8-flash-tts",
+  "durations": [
+   3.121,
+   5.855,
+   3.503
+  ]
+ },
+ "step5": {
+  "hash": "fbb835ecee43",
+  "model": "gemini-3.1-flash-tts-preview",
+  "durations": [
+   3.524,
+   6.844,
+   4.126
+  ]
+ },
+ "step6": {
+  "hash": "c864dbab65f3",
+  "model": "gemini-3.1-flash-tts-preview",
+  "durations": [
+   8.579
+  ]
+ },
+ "step7": {
+  "hash": "0e88148a4ab6",
+  "model": "gemini-3.1-flash-tts-preview",
+  "durations": [
+   3.453,
+   4.385
+  ]
+ },
+ "outro": {
+  "hash": "6c0f74666774",
+  "model": "gemini-3.1-flash-tts-preview",
+  "durations": [
+   6.565,
+   6.533,
+   3.805
+  ]
+ }
+}
