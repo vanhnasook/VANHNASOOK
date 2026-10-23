@@ -4,51 +4,73 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LAP Student Accident Brochure</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;500;600;700;800&family=Noto+Sans+Lao+Looped:wght@600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Print-ready version (3 mm bleed, crop and fold marks on 317 × 230 mm pages): open index.html#print -->
+<script>if (location.hash === '#print') document.documentElement.classList.add('print-ready');</script>
 <style>
+  @font-face { font-family: "Noto Sans Lao"; font-weight: 400 800; font-display: block; src: url(assets/fonts/noto-sans-lao-lao.woff2) format("woff2"); unicode-range: U+0E81-0EDF, U+200C-200D, U+25CC; }
+  @font-face { font-family: "Noto Sans Lao"; font-weight: 400 800; font-display: block; src: url(assets/fonts/noto-sans-lao-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: "Noto Sans Lao Looped"; font-weight: 800; font-display: block; src: url(assets/fonts/noto-sans-lao-looped-lao.woff2) format("woff2"); unicode-range: U+0E81-0EDF, U+200C-200D, U+25CC; }
+  @font-face { font-family: "Noto Sans Lao Looped"; font-weight: 800; font-display: block; src: url(assets/fonts/noto-sans-lao-looped-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
   :root {
     --navy: #13234a;
     --navy-2: #1d3470;
     --gold: #f4b41a;
     --gold-2: #ffd35a;
     --gold-deep: #b87a00;
+    --gold-text: #946200; /* gold for small text: 5.2:1 on white, 4.95:1 on cream */
     --cream: #fff8e8;
     --ink: #1c2233;
     --muted: #5d6478;
     --line: #ecdcb4;
+    --bleed: 0mm;
   }
+  html.print-ready { --bleed: 3mm; }
   @page { size: 297mm 210mm; margin: 0; }
+  @page bleed { size: 317mm 230mm; margin: 0; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #d9dce3; }
   body {
-    font-family: "Poppins", "Noto Sans Lao", sans-serif;
+    font-family: "Noto Sans Lao", sans-serif;
+    font-size: 8pt; line-height: 1.4;
     color: var(--ink);
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
-  .lo { font-family: "Noto Sans Lao", "Poppins", sans-serif; }
+  .lo { font-family: "Noto Sans Lao", sans-serif; }
   .display { font-family: "Noto Sans Lao Looped", "Noto Sans Lao", sans-serif; }
 
+  /* Roll fold: the flap that tucks inside is 3mm narrower (outside left = inside right). */
+  .outside { --c1: 97mm; --c2: 100mm; --c3: 100mm; }
+  .inside { --c1: 100mm; --c2: 100mm; --c3: 97mm; }
   .sheet {
-    width: 297mm; height: 210mm;
+    width: calc(297mm + 2 * var(--bleed)); height: calc(210mm + 2 * var(--bleed));
     margin: 10mm auto; background: #fff;
-    display: grid; grid-template-columns: repeat(3, 99mm);
+    display: grid; grid-template-columns: calc(var(--c1) + var(--bleed)) var(--c2) calc(var(--c3) + var(--bleed));
     position: relative; overflow: hidden;
     box-shadow: 0 6px 30px rgba(0,0,0,.18);
-    page-break-after: always; break-after: page;
   }
-  .sheet:last-child { page-break-after: auto; break-after: auto; }
+  .page { break-after: page; }
+  .page:last-child { break-after: auto; }
+  .marks { display: none; }
   @media print { html, body { background: #fff; } .sheet { margin: 0; box-shadow: none; } }
 
-  .panel { position: relative; padding: 11mm 9mm 9mm; overflow: hidden; }
+  /* Print-ready pages: artwork bleeds 3mm past the trim; crop and fold marks sit outside the bleed. */
+  .print-ready .page { position: relative; width: 317mm; height: 230mm; margin: 10mm auto; background: #fff; page: bleed; }
+  .print-ready .sheet { position: absolute; left: 7mm; top: 7mm; margin: 0; box-shadow: none; }
+  .print-ready .marks { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+  @media print { .print-ready .page { margin: 0; } }
+
+  /* --bl / --br: extra padding on a panel side that runs into the bleed */
+  .panel { --bl: 0mm; --br: 0mm; position: relative; padding: calc(11mm + var(--bleed)) calc(9mm + var(--br)) calc(9mm + var(--bleed)) calc(9mm + var(--bl)); overflow: hidden; }
+  .panel:first-child { --bl: var(--bleed); }
+  .panel:last-child { --br: var(--bleed); }
   .panel + .panel { border-left: 0.3mm dashed rgba(19,35,74,.08); }
 
   /* ---------- Section headings ---------- */
   .kicker {
     display: inline-flex; align-items: center; gap: 2mm;
     font-size: 7.5pt; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--gold-deep);
+    color: var(--gold-text);
   }
   .kicker::before { content: ""; width: 6mm; height: .7mm; background: var(--gold); border-radius: 1mm; }
   h2.title { font-size: 19pt; line-height: 1.25; color: var(--navy); margin-top: 1.5mm; font-weight: 800; }
@@ -70,7 +92,7 @@
     box-shadow: 0 0 0 1.2mm #fff, 0 0 0 1.6mm var(--gold);
   }
   .step h3 { font-size: 11pt; line-height: 1.35; color: var(--navy); font-weight: 700; }
-  .step h3 b { color: var(--gold-deep); }
+  .step h3 b { color: var(--gold-text); }
   .step p { font-size: 7.5pt; color: var(--muted); margin-top: .3mm; }
 
   .notice {
@@ -94,15 +116,15 @@
   }
   .ex .badge .icon { width: 4.6mm; height: 4.6mm; }
   .ex strong { display: block; font-size: 8pt; line-height: 1.35; color: var(--ink); font-weight: 600; }
-  .ex span { font-size: 6.5pt; color: var(--muted); }
-  .fine { font-size: 6.8pt; color: var(--muted); margin-top: 3mm; display: flex; gap: 1.5mm; align-items: center; }
+  .ex span { display: block; font-size: 7pt; color: var(--muted); }
+  .fine { font-size: 7.5pt; color: var(--muted); margin-top: 3mm; display: flex; gap: 1.5mm; align-items: center; }
   .fine .icon { width: 3.6mm; height: 3.6mm; color: var(--gold-deep); flex: none; }
 
   /* ---------- OUTSIDE: back / contact ---------- */
   .back { background: var(--navy); color: #fff; }
   .back::before {
     content: ""; position: absolute; width: 90mm; height: 90mm; border-radius: 50%;
-    right: -45mm; top: -35mm; background: radial-gradient(circle, rgba(244,180,26,.22), transparent 70%);
+    right: -45mm; top: calc(-35mm + var(--bleed)); background: radial-gradient(circle, rgba(244,180,26,.22), transparent 70%);
   }
   .back .kicker { color: var(--gold-2); }
   .back h2.title { color: #fff; }
@@ -122,8 +144,8 @@
   .contacts li:last-child { border-bottom: 0; }
   .contacts .ci { width: 8mm; height: 8mm; border-radius: 50%; background: rgba(244,180,26,.14); color: var(--gold-2); display: grid; place-items: center; }
   .contacts .ci .icon { width: 4.2mm; height: 4.2mm; }
-  .contacts small { display: block; font-size: 6.5pt; color: #aab5d4; }
-  .contacts b { font-size: 8.8pt; font-weight: 600; }
+  .contacts small { display: block; font-size: 8pt; color: #aab5d4; }
+  .contacts b { font-size: 9pt; font-weight: 600; }
 
   .qr-row { display: flex; gap: 4mm; align-items: center; margin-top: 3mm; }
   .qr { background: #fff; padding: 1.8mm; border-radius: 2.5mm; flex: none; }
@@ -131,7 +153,7 @@
   .qr-row p { font-size: 8pt; color: #d9dff0; }
   .qr-row p b { color: var(--gold-2); display: block; font-size: 9pt; }
 
-  .company { position: absolute; left: 9mm; right: 9mm; bottom: 6mm; display: flex; gap: 3mm; align-items: center; border-top: .3mm solid rgba(255,255,255,.14); padding-top: 3mm; }
+  .company { position: absolute; left: calc(9mm + var(--bl)); right: calc(9mm + var(--br)); bottom: calc(6mm + var(--bleed)); display: flex; gap: 3mm; align-items: center; border-top: .3mm solid rgba(255,255,255,.14); padding-top: 3mm; }
   .company img { width: 10mm; height: 10mm; border-radius: 50%; }
   .company strong { font-size: 8.5pt; display: block; color: #fff; }
   .company span { font-size: 7pt; color: var(--gold-2); }
@@ -147,12 +169,12 @@
     background: linear-gradient(180deg, rgba(19,35,74,.0) 30%, rgba(19,35,74,.55) 55%, rgba(19,35,74,.97) 72%, var(--navy) 100%);
   }
   .cover .top {
-    position: absolute; top: 8mm; left: 8mm; right: 8mm;
+    position: absolute; top: calc(8mm + var(--bleed)); left: calc(8mm + var(--bl)); right: calc(8mm + var(--br));
     display: flex; align-items: center; justify-content: space-between;
   }
   .cover .top img { width: 17mm; height: 17mm; border-radius: 50%; box-shadow: 0 2mm 5mm rgba(0,0,0,.25); }
   .pill { background: rgba(19,35,74,.8); color: var(--gold-2); font-size: 7pt; font-weight: 600; padding: 1.5mm 3mm; border-radius: 10mm; letter-spacing: .06em; }
-  .cover .body { position: absolute; left: 9mm; right: 9mm; bottom: 10mm; }
+  .cover .body { position: absolute; left: calc(9mm + var(--bl)); right: calc(9mm + var(--br)); bottom: calc(10mm + var(--bleed)); }
   .cover h1 { font-size: 30pt; line-height: 1.2; font-weight: 800; color: #fff; }
   .cover h1 span { color: var(--gold); }
   .cover .en { font-size: 10pt; font-weight: 600; color: var(--gold-2); margin-top: 1.5mm; letter-spacing: .01em; }
@@ -174,17 +196,16 @@
   .elig { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; margin-top: 4mm; }
   .elig div { background: var(--cream); border-radius: 3mm; padding: 3mm; }
   .elig .icon { color: var(--gold-deep); width: 5mm; height: 5mm; }
-  .elig strong { display: block; font-size: 7.8pt; line-height: 1.35; margin-top: 1.2mm; color: var(--navy); font-weight: 600; }
-  .elig span { display: block; font-size: 6.3pt; color: var(--muted); margin-top: .5mm; }
+  .elig strong { display: block; font-size: 8.5pt; line-height: 1.35; margin-top: 1.2mm; color: var(--navy); font-weight: 600; }
+  .elig span { display: block; font-size: 7pt; color: var(--muted); margin-top: .5mm; }
 
-  .scope { margin-top: 7mm; }
-  .scope ul { list-style: none; margin-top: 3mm; }
-  .scope li { display: grid; grid-template-columns: 8.5mm 1fr; gap: 3mm; align-items: center; padding: 1.9mm 0; border-bottom: .3mm dashed var(--line); }
-  .scope li:last-child { border-bottom: 0; }
-  .scope .si { width: 8.5mm; height: 8.5mm; border-radius: 50%; background: var(--navy); color: var(--gold-2); display: grid; place-items: center; }
-  .scope .si .icon { width: 4.4mm; height: 4.4mm; }
-  .scope strong { display: block; font-size: 9pt; color: var(--navy); font-weight: 600; }
-  .scope span { font-size: 6.8pt; color: var(--muted); }
+  .todo { margin-top: 8mm; }
+  .todo ol { list-style: none; margin-top: 3mm; }
+  .todo li { display: grid; grid-template-columns: 8.5mm 1fr; gap: 3mm; align-items: center; padding: 3mm 0; border-bottom: .3mm dashed var(--line); }
+  .todo li:last-child { border-bottom: 0; }
+  .todo li i { font-style: normal; width: 8.5mm; height: 8.5mm; border-radius: 50%; background: var(--navy); color: var(--gold-2); display: grid; place-items: center; font-size: 11pt; font-weight: 700; }
+  .todo strong { display: block; font-size: 9pt; color: var(--navy); font-weight: 600; }
+  .todo span { font-size: 7pt; color: var(--muted); }
 
   table.benefits { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 4mm; font-size: 8pt; background: #fff; border-radius: 3.5mm; overflow: hidden; box-shadow: 0 1mm 4mm rgba(19,35,74,.08); }
   .benefits th { background: var(--navy); color: #fff; font-weight: 600; padding: 3mm 1.5mm; font-size: 8pt; }
@@ -195,7 +216,7 @@
   .benefits tr:last-child td { border-bottom: 0; }
   .benefits td:first-child { text-align: left; padding-left: 3mm; }
   .benefits td:first-child strong { display: block; font-size: 8.3pt; line-height: 1.3; }
-  .benefits td:first-child span { font-size: 6pt; color: var(--muted); font-weight: 400; }
+  .benefits td:first-child span { font-size: 7pt; color: var(--muted); font-weight: 400; }
   .benefits .m { font-size: 9.5pt; }
   .unit { font-size: 6.8pt; color: var(--muted); margin-top: 2mm; text-align: right; }
 
@@ -207,66 +228,68 @@
   .highlight strong { display: block; font-size: 11pt; color: var(--gold-2); }
   .highlight span { font-size: 7.5pt; color: #d9dff0; }
 
-  .plans { margin-top: 5mm; display: grid; gap: 3.5mm; }
-  .plan { border-radius: 4mm; padding: 4mm 4.5mm; border: .4mm solid var(--line); display: grid; grid-template-columns: 1fr auto; align-items: center; position: relative; background: #fff; }
+  .plans { margin-top: 5mm; display: grid; gap: 3mm; }
+  .plan { border-radius: 4mm; padding: 3.5mm 4.5mm; border: .4mm solid var(--line); display: grid; grid-template-columns: 1fr auto; align-items: center; position: relative; background: #fff; }
   .plan .name { font-size: 12pt; font-weight: 700; color: var(--navy); }
-  .plan .name small { display: block; font-size: 6.8pt; color: var(--muted); font-weight: 400; }
+  .plan .name small { display: block; font-size: 7.5pt; color: var(--muted); font-weight: 400; }
   .plan .amt { text-align: right; }
   .plan .amt b { font-size: 21pt; font-weight: 800; color: var(--navy); line-height: 1; display: block; }
-  .plan .amt span { font-size: 7.2pt; color: var(--muted); font-weight: 500; }
+  .plan .amt span { font-size: 8pt; color: var(--muted); font-weight: 500; }
   .plan.best { background: var(--navy); border-color: var(--navy); }
   .plan.best .name, .plan.best .amt b { color: #fff; }
   .plan.best .name small, .plan.best .amt span { color: #aab5d4; }
   .plan.best .amt b { color: var(--gold-2); }
-  .plan .flag { position: absolute; top: -2.6mm; left: 4.5mm; background: var(--gold); color: var(--navy); font-size: 6.5pt; font-weight: 700; padding: .8mm 2.5mm; border-radius: 3mm; }
+  .plan .flag { position: absolute; top: -2.6mm; left: 4.5mm; background: var(--gold); color: var(--navy); font-size: 8pt; font-weight: 700; padding: .8mm 2.5mm; border-radius: 3mm; }
 
-  .foot-note { position: absolute; left: 9mm; right: 9mm; bottom: 8mm; background: var(--cream); border: .3mm solid var(--line); border-radius: 3mm; padding: 3mm 3.5mm; display: flex; gap: 3mm; align-items: flex-start; }
+  .foot-note { position: absolute; left: calc(9mm + var(--bl)); right: calc(9mm + var(--br)); bottom: calc(8mm + var(--bleed)); background: var(--cream); border: .3mm solid var(--line); border-radius: 3mm; padding: 3mm 3.5mm; display: flex; gap: 3mm; align-items: flex-start; }
   .foot-note .icon { color: var(--gold-deep); flex: none; }
-  .foot-note strong { display: block; font-size: 7.5pt; line-height: 1.45; color: var(--navy); font-weight: 600; }
-  .foot-note span { display: block; font-size: 6.3pt; color: var(--muted); margin-top: .8mm; }
+  .foot-note strong { display: block; font-size: 8pt; line-height: 1.45; color: var(--navy); font-weight: 600; }
+  .foot-note span { display: block; font-size: 7pt; color: var(--muted); margin-top: .8mm; }
 
-  .deco { position: absolute; right: -14mm; top: -14mm; width: 40mm; height: 40mm; border-radius: 50%; border: 6mm solid rgba(244,180,26,.14); }
+  .deco { position: absolute; right: -14mm; top: calc(-14mm + var(--bleed)); width: 40mm; height: 40mm; border-radius: 50%; border: 6mm solid rgba(244,180,26,.14); }
 
   /* ---------- Fill-in blocks ---------- */
-  .tips { margin-top: 3.5mm; }
-  .tips h4 { font-size: 10pt; color: #fff; font-weight: 700; margin-top: 1mm; }
-  .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6mm; margin-top: 2mm; }
-  .tips-grid > div { background: rgba(255,255,255,.06); border: .3mm solid rgba(255,255,255,.1); border-radius: 2.5mm; padding: 1.6mm 2mm; display: grid; grid-template-columns: 5mm 1fr; gap: 2mm; align-items: start; }
-  .tips-grid i { font-style: normal; width: 5mm; height: 5mm; border-radius: 50%; background: var(--gold); color: var(--navy); font-size: 7pt; font-weight: 700; display: grid; place-items: center; }
-  .tips-grid strong { display: block; font-size: 7.3pt; line-height: 1.35; font-weight: 600; }
-  .tips-grid span { display: block; font-size: 5.8pt; color: #aab5d4; margin-top: .3mm; }
+  .covered { margin-top: 3.5mm; }
+  .covered h4 { font-size: 10pt; color: #fff; font-weight: 700; margin-top: 1mm; }
+  .covered ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1.6mm; margin-top: 2mm; }
+  .covered li { background: rgba(255,255,255,.06); border: .3mm solid rgba(255,255,255,.1); border-radius: 2.5mm; padding: 1.6mm 2mm; display: grid; grid-template-columns: 6mm 1fr; gap: 2mm; align-items: center; }
+  .covered li:last-child { grid-column: span 2; }
+  .covered .ci { width: 6mm; height: 6mm; border-radius: 50%; background: var(--gold); color: var(--navy); display: grid; place-items: center; }
+  .covered .ci .icon { width: 3.6mm; height: 3.6mm; stroke-width: 2; }
+  .covered strong { display: block; font-size: 8pt; line-height: 1.35; font-weight: 600; }
+  .covered span { display: block; font-size: 7pt; color: #aab5d4; }
 
   .compare { margin-top: 3.5mm; background: #fff; border-radius: 3.5mm; padding: 3.5mm 4mm; border: .3mm solid var(--line); }
   .compare h4 { font-size: 9.5pt; color: var(--navy); font-weight: 700; }
-  .compare h4 small { font-size: 6.8pt; color: var(--muted); font-weight: 400; margin-left: 1mm; }
+  .compare h4 small { font-size: 7.5pt; color: var(--muted); font-weight: 400; margin-left: 1mm; }
   .bars { margin-top: 2.5mm; }
-  .bars .lbl { font-size: 7pt; color: var(--muted); margin: 2mm 0 1mm; }
-  .bar { display: grid; grid-template-columns: 10mm 1fr 17mm; gap: 2mm; align-items: center; margin-bottom: 1.2mm; font-size: 7pt; font-weight: 600; color: var(--navy); }
+  .bars .lbl { font-size: 8pt; color: var(--muted); margin: 2mm 0 1mm; }
+  .bar { display: grid; grid-template-columns: 11mm 1fr 17mm; gap: 2mm; align-items: center; margin-bottom: 1.2mm; font-size: 8pt; font-weight: 600; color: var(--navy); }
   .bar .track { height: 2.6mm; background: #f3ecd9; border-radius: 2mm; overflow: hidden; }
   .bar .fill { height: 100%; background: var(--navy-2); border-radius: 2mm; }
   .bar.p3 .fill { background: var(--gold); }
   .bar em { font-style: normal; text-align: right; font-variant-numeric: tabular-nums; }
   .facts { list-style: none; margin-top: 3mm; display: grid; gap: 1.8mm; }
-  .facts li { display: flex; gap: 2mm; align-items: flex-start; font-size: 7.2pt; line-height: 1.4; color: var(--ink); }
+  .facts li { display: flex; gap: 2mm; align-items: flex-start; font-size: 8pt; line-height: 1.4; color: var(--ink); }
   .facts li .icon { width: 3.8mm; height: 3.8mm; color: var(--gold-deep); flex: none; margin-top: .3mm; }
   .facts b { color: var(--navy); }
 
-  .plan .day { display: block; font-size: 6.5pt; color: var(--gold-deep); font-weight: 600; margin-top: .8mm; }
+  .plan .day { display: block; font-size: 8pt; color: var(--gold-text); font-weight: 600; margin-top: .8mm; }
   .plan.best .day { color: var(--gold-2); }
 
-  .enrol { margin-top: 5mm; }
+  .enrol { margin-top: 4.5mm; }
   .enrol h4 { font-size: 10pt; color: var(--navy); font-weight: 700; margin-top: 1mm; }
   .enrol ol { list-style: none; margin-top: 2.5mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2mm; }
   .enrol li { text-align: center; background: #fff; border: .3mm solid #e4e7ef; border-radius: 3mm; padding: 2.5mm 1.5mm; }
   .enrol li i { font-style: normal; display: grid; place-items: center; width: 6mm; height: 6mm; border-radius: 50%; margin: 0 auto 1.3mm; background: var(--navy); color: var(--gold-2); font-size: 7.5pt; font-weight: 700; }
-  .enrol li strong { display: block; font-size: 7pt; line-height: 1.35; color: var(--navy); font-weight: 600; }
-  .enrol li span { display: block; font-size: 5.8pt; color: var(--muted); margin-top: .5mm; }
+  .enrol li strong { display: block; font-size: 8pt; line-height: 1.35; color: var(--navy); font-weight: 600; }
+  .enrol li span { display: block; font-size: 7pt; color: var(--muted); margin-top: .5mm; }
 
-  .band { position: absolute; left: 9mm; right: 9mm; bottom: 8mm; background: var(--navy); color: #fff; border-radius: 3.5mm; padding: 3mm 4mm; display: flex; align-items: center; justify-content: space-between; gap: 3mm; }
+  .band { position: absolute; left: calc(9mm + var(--bl)); right: calc(9mm + var(--br)); bottom: calc(8mm + var(--bleed)); background: var(--navy); color: #fff; border-radius: 3.5mm; padding: 3mm 4mm; display: flex; align-items: center; justify-content: space-between; gap: 3mm; }
   .band strong { display: block; font-size: 9.5pt; color: var(--gold-2); }
-  .band span { font-size: 6.8pt; color: #d9dff0; }
+  .band span { font-size: 8pt; color: #d9dff0; }
   .band .hl { text-align: right; flex: none; }
-  .band .hl small { display: block; font-size: 6pt; color: #aab5d4; }
+  .band .hl small { display: block; font-size: 8pt; color: #aab5d4; }
   .band .hl b { font-size: 16pt; font-weight: 800; color: #fff; line-height: 1; }
 </style>
 </head>
@@ -282,9 +305,10 @@
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
   <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
-  <symbol id="i-angry" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2M7.5 8 10 9M14 9l2.5-1M9 10h.01M15 10h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.5 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3zM12 9v4M12 17h.01"/></symbol>
   <symbol id="i-nodrink" viewBox="0 0 24 24"><path d="M8 22h8M12 15v7M5 3h14l-1.5 8a5.5 5.5 0 0 1-11 0z"/><path d="m3 3 18 18"/></symbol>
   <symbol id="i-swords" viewBox="0 0 24 24"><path d="M14.5 17.5 3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2M14.5 6.5 18 3h3v3l-3.5 3.5M5 14l4 4M7 17l-3 3M3 19l2 2"/></symbol>
+  <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M14 4v10.5a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0zM12 18v-6"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/></symbol>
   <symbol id="i-cap" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5M22 10v6"/></symbol>
   <symbol id="i-school" viewBox="0 0 24 24"><path d="M14 22v-4a2 2 0 1 0-4 0v4M18 10l4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2M18 5v17M4 6l8-4 8 4M6 5v17"/><circle cx="12" cy="9" r="2"/></symbol>
@@ -292,11 +316,20 @@
   <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 18V6"/></symbol>
   <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/></symbol>
   <symbol id="i-access" viewBox="0 0 24 24"><circle cx="16" cy="4" r="1"/><path d="m18 19 1-7-6 1M5 8l3-3 5.5 3-2.4 3.5M4.2 14.5a5 5 0 0 0 6.9 6.9M13.8 17.5a5 5 0 0 0-6.9-6.9"/></symbol>
+  <symbol id="i-bone" viewBox="0 0 24 24"><path d="M17 10c.7-.7 1.7 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .8.7 1.8 0 2.5l-7 7c-.7.7-1.7 0-2.5 0a2.5 2.5 0 0 0 0 5c.3 0 .5.2.5.5a2.5 2.5 0 1 0 5 0c0-.8-.7-1.8 0-2.5z"/></symbol>
   <symbol id="i-flower" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M12 11v11M12 22c-3 0-6-2-6-6 3 0 6 2 6 6zM12 22c3 0 6-2 6-6-3 0-6 2-6 6zM12 5a3 3 0 0 1 3-3M9 8a3 3 0 0 1-3-3"/></symbol>
   <symbol id="i-cross" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v6M9 11h6"/></symbol>
 </svg>
 
 <!-- ================= OUTSIDE (flap | back | cover) ================= -->
+<div class="page">
+<svg class="marks" viewBox="0 0 317 230" aria-hidden="true">
+  <g stroke="#000" stroke-width=".1" fill="none">
+    <path d="M10 0v6M307 0v6M10 224v6M307 224v6M0 10h6M311 10h6M0 220h6M311 220h6"/>
+    <path stroke-dasharray="1 1" d="M107 0v6M207 0v6M107 224v6M207 224v6"/>
+  </g>
+  <text x="12" y="228" font-size="2.2" font-family="sans-serif">LAP Student PA · OUTSIDE · trim 297 × 210 mm · bleed 3 mm · roll fold 97 | 100 | 100 mm</text>
+</svg>
 <section class="sheet outside">
 
   <!-- Inside flap: claims + exclusions -->
@@ -330,10 +363,10 @@
       <h2 class="title display" style="font-size:15pt">ຂໍ້ຍົກເວັ້ນຫຼັກ 4 ຂໍ້</h2>
       <p class="sub">4 main exclusions</p>
       <div class="excl-grid">
-        <div class="ex"><div class="badge"><svg class="icon"><use href="#i-angry"/></svg></div><strong>ເຈດຕະນາທຳຮ້າຍຕົນເອງ</strong><span>Intentional acts</span></div>
+        <div class="ex"><div class="badge"><svg class="icon"><use href="#i-alert"/></svg></div><strong>ເຈດຕະນາທຳຮ້າຍຕົນເອງ</strong><span>Intentional self-harm</span></div>
         <div class="ex"><div class="badge"><svg class="icon"><use href="#i-nodrink"/></svg></div><strong>ເມົາເຫຼົ້າ ຫຼື ຢາເສບຕິດ</strong><span>Alcohol or drugs</span></div>
         <div class="ex"><div class="badge"><svg class="icon"><use href="#i-swords"/></svg></div><strong>ກະທຳຜິດກົດໝາຍ ຫຼື ທະເລາະວິວາດ</strong><span>Illegal acts or fighting</span></div>
-        <div class="ex"><div class="badge"><svg class="icon"><use href="#i-plus"/></svg></div><strong>ພະຍາດທີ່ບໍ່ໄດ້ເກີດຈາກອຸປະຕິເຫດ</strong><span>Illness not caused by accident</span></div>
+        <div class="ex"><div class="badge"><svg class="icon"><use href="#i-thermo"/></svg></div><strong>ພະຍາດທີ່ບໍ່ໄດ້ເກີດຈາກອຸປະຕິເຫດ</strong><span>Illness not caused by accident</span></div>
       </div>
       <p class="fine"><svg class="icon"><use href="#i-book"/></svg>ລາຍລະອຽດຂໍ້ຍົກເວັ້ນໃຫ້ອີງຕາມສັນຍາປະກັນໄພ · See policy for full exclusions.</p>
     </div>
@@ -362,15 +395,16 @@
       <p><b>ສະແກນເພື່ອເຂົ້າເວັບໄຊ</b>Scan to visit www.lap.com.la</p>
     </div>
 
-    <div class="tips">
-      <span class="kicker">What to do</span>
-      <h4>ເມື່ອເກີດອຸປະຕິເຫດ ຄວນເຮັດແນວໃດ?</h4>
-      <div class="tips-grid">
-        <div><i>1</i><div><strong>ນຳສົ່ງໂຮງໝໍທີ່ໃກ້ທີ່ສຸດ</strong><span>Go to the nearest hospital</span></div></div>
-        <div><i>2</i><div><strong>ໂທແຈ້ງ 1819 ທັນທີ</strong><span>Call 1819 right away</span></div></div>
-        <div><i>3</i><div><strong>ແຈ້ງໂຮງຮຽນ ແລະ ຜູ້ປົກຄອງ</strong><span>Inform the school and parents</span></div></div>
-        <div><i>4</i><div><strong>ເກັບໃບບິນ ແລະ ໃບຢັ້ງຢືນແພດ</strong><span>Keep receipts and medical certificates</span></div></div>
-      </div>
+    <div class="covered">
+      <span class="kicker">Coverage scope</span>
+      <h4>ຂອບເຂດການຄຸ້ມກັນ</h4>
+      <ul>
+        <li><div class="ci"><svg class="icon"><use href="#i-cross"/></svg></div><div><strong>ເສຍຊີວິດຈາກອຸປະຕິເຫດ</strong><span>Accidental death</span></div></li>
+        <li><div class="ci"><svg class="icon"><use href="#i-access"/></svg></div><div><strong>ພິການຖາວອນທັງໝົດ</strong><span>Total permanent disability</span></div></li>
+        <li><div class="ci"><svg class="icon"><use href="#i-bone"/></svg></div><div><strong>ພິການຖາວອນບາງສ່ວນ</strong><span>Partial permanent disability</span></div></li>
+        <li><div class="ci"><svg class="icon"><use href="#i-plus"/></svg></div><div><strong>ຄ່າປິ່ນປົວຕໍ່ອຸປະຕິເຫດ</strong><span>Medical expenses</span></div></li>
+        <li><div class="ci"><svg class="icon"><use href="#i-flower"/></svg></div><div><strong>ຄ່າປົງສົບ</strong><span>Funeral expenses</span></div></li>
+      </ul>
     </div>
 
     <div class="company">
@@ -397,11 +431,20 @@
     </div>
   </div>
 </section>
+</div>
 
 <!-- ================= INSIDE ================= -->
+<div class="page">
+<svg class="marks" viewBox="0 0 317 230" aria-hidden="true">
+  <g stroke="#000" stroke-width=".1" fill="none">
+    <path d="M10 0v6M307 0v6M10 224v6M307 224v6M0 10h6M311 10h6M0 220h6M311 220h6"/>
+    <path stroke-dasharray="1 1" d="M110 0v6M210 0v6M110 224v6M210 224v6"/>
+  </g>
+  <text x="12" y="228" font-size="2.2" font-family="sans-serif">LAP Student PA · INSIDE · trim 297 × 210 mm · bleed 3 mm · roll fold 100 | 100 | 97 mm</text>
+</svg>
 <section class="sheet inside">
 
-  <!-- Eligibility + coverage -->
+  <!-- Eligibility + what to do after an accident -->
   <div class="panel lo">
     <div class="deco"></div>
     <span class="kicker">Eligibility</span>
@@ -413,16 +456,15 @@
       <div><svg class="icon"><use href="#i-coin"/></svg><strong>ຄ່າທຳນຽມເປັນ LAK / ຄົນ / ປີ</strong><span>Premium in LAK per person per year</span></div>
     </div>
 
-    <div class="scope">
-      <span class="kicker">Coverage scope</span>
-      <h2 class="title display" style="font-size:15pt">ຂອບເຂດການຄຸ້ມກັນ</h2>
-      <ul>
-        <li><div class="si"><svg class="icon"><use href="#i-cross"/></svg></div><div><strong>ເສຍຊີວິດຈາກອຸປະຕິເຫດ</strong><span>Accidental death</span></div></li>
-        <li><div class="si"><svg class="icon"><use href="#i-access"/></svg></div><div><strong>ພິການຖາວອນທັງໝົດ</strong><span>Total permanent disability</span></div></li>
-        <li><div class="si"><svg class="icon"><use href="#i-access"/></svg></div><div><strong>ພິການຖາວອນບາງສ່ວນ</strong><span>Partial permanent disability</span></div></li>
-        <li><div class="si"><svg class="icon"><use href="#i-plus"/></svg></div><div><strong>ຄ່າປິ່ນປົວຕໍ່ອຸປະຕິເຫດ</strong><span>Medical expenses</span></div></li>
-        <li><div class="si"><svg class="icon"><use href="#i-flower"/></svg></div><div><strong>ຄ່າປົງສົບ</strong><span>Funeral expenses</span></div></li>
-      </ul>
+    <div class="todo">
+      <span class="kicker">What to do</span>
+      <h2 class="title display" style="font-size:15pt">ເມື່ອເກີດອຸປະຕິເຫດ<br>ຄວນເຮັດແນວໃດ?</h2>
+      <ol>
+        <li><i>1</i><div><strong>ນຳສົ່ງໂຮງໝໍທີ່ໃກ້ທີ່ສຸດ</strong><span>Go to the nearest hospital</span></div></li>
+        <li><i>2</i><div><strong>ໂທແຈ້ງ 1819 ທັນທີ</strong><span>Call 1819 right away</span></div></li>
+        <li><i>3</i><div><strong>ແຈ້ງໂຮງຮຽນ ແລະ ຜູ້ປົກຄອງ</strong><span>Inform the school and parents</span></div></li>
+        <li><i>4</i><div><strong>ເກັບໃບບິນ ແລະ ໃບຢັ້ງຢືນແພດ</strong><span>Keep receipts and medical certificates</span></div></li>
+      </ol>
     </div>
 
     <div class="band">
@@ -485,7 +527,7 @@
       <div class="plan best"><span class="flag">ຄຸ້ມຄອງສູງສຸດ</span><div class="name">ແຜນ 3<small>Plan 3</small></div><div class="amt"><b>90,000</b><span>LAK / ຄົນ / ປີ</span><span class="day">≈ 247 ກີບ / ວັນ</span></div></div>
     </div>
 
-    <div class="notice" style="margin-top:6mm">
+    <div class="notice" style="margin-top:4.5mm">
       <svg class="icon"><use href="#i-headset"/></svg>
       <div><strong>ສົນໃຈສະໝັກ ໂທ 020 9855 6666</strong><span>Enquiries: contactus@lap.com.la</span></div>
     </div>
@@ -506,6 +548,7 @@
     </div>
   </div>
 </section>
+</div>
 
 </body>
 </html>
