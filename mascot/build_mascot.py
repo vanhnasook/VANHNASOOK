@@ -21,7 +21,7 @@ from pathlib import Path
 
 import bpy  # must precede bmesh/mathutils when using the PyPI bpy module
 import bmesh
-from mathutils import Matrix, Vector
+from mathutils import Euler, Matrix, Vector
 from mathutils.bvhtree import BVHTree
 
 try:
@@ -74,6 +74,8 @@ def clear_previous_build():
                 bpy.data.objects.remove(obj, do_unlink=True)
         for c in reversed(family):
             bpy.data.collections.remove(c)
+    for act in [a for a in bpy.data.actions if a.get("nong_lanxang_pose")]:
+        bpy.data.actions.remove(act)  # fake-user pose actions are never orphans
     bpy.data.orphans_purge(do_recursive=True)
 
 
@@ -473,6 +475,8 @@ class Mascot:
         m["helper"] = principled("Helper", "#ff00ff", 0.5)
         self.mat = m
         self.parts = []
+        self.arm_joints = {}
+        self.eye_parts = {}
 
     def add(self, obj):
         self.parts.append(obj)
@@ -551,6 +555,7 @@ class Mascot:
                (0.095, -0.545, 1.125), (0.19, -0.575, 1.10), (0.28, -0.575, 1.13),
                (0.34, -0.56, 1.20), (0.36, -0.55, 1.275), (0.362, -0.548, 1.30)]
         radii = [0.115, 0.106, 0.094, 0.083, 0.074, 0.067, 0.063, 0.065, 0.07]
+        self.trunk_pts = [Vector(p) for p in pts]
         self.add(tube("Trunk", self.colls["Head"], self.mat["skin"], pts, radii))
         tip, prev = Vector(pts[-1]), Vector(pts[-2])
         axis = (tip - prev).normalized()
@@ -564,6 +569,7 @@ class Mascot:
 
     def build_mouth(self):
         p, n = self.head_hit((-0.085, -0.29, -0.275))
+        self.mouth_frame = (p.copy(), n.copy())
         rot = frame(n) @ Matrix.Rotation(math.radians(-8), 3, "Z")
         cutter = ellipsoid("Mouth_Cutter", self.colls["Helpers"], self.mat["mouth"], p - n * 0.004,
                            (0.082, 0.062, 0.075), rot,
@@ -588,7 +594,7 @@ class Mascot:
             center = p - n * 0.012
             eye = ellipsoid(name, self.colls["Face"], self.mat["eye"], center, radii, rot,
                             seg=48, rings=24, scale_in_object=True)
-            self.add(eye)
+            opened = [self.add(eye)]
 
             def on_eye(u, v, lift=0.001):
                 w = math.sqrt(max(0.0, 1 - u * u - v * v))
@@ -596,8 +602,9 @@ class Mascot:
 
             for size, (u, v), r in (("Big", (0.32, 0.36), (0.024, 0.03)),
                                     ("Small", (-0.33, -0.38), (0.011, 0.013))):
-                self.add(ellipsoid(f"{name}_Highlight_{size}", self.colls["Face"], self.mat["highlight"],
-                                   on_eye(u, v), (*r, 0.004), rot, subsurf=1))
+                opened.append(self.add(ellipsoid(f"{name}_Highlight_{size}", self.colls["Face"],
+                                                 self.mat["highlight"], on_eye(u, v), (*r, 0.004),
+                                                 rot, subsurf=1)))
 
             # upper lash line: hugs the top of the eye, thicker at the outer corner
             line, rads = [], []
@@ -609,7 +616,8 @@ class Mascot:
                 q, _ = self.on_head(center + rot @ local, lift=0.004)
                 line.append(q)
                 rads.append(0.0045 + 0.006 * t ** 1.5)
-            self.add(tube(name + "_LashLine", self.colls["Face"], self.mat["dark"], line, rads))
+            opened.append(self.add(tube(name + "_LashLine", self.colls["Face"], self.mat["dark"],
+                                        line, rads)))
             for k, ang in enumerate((18, 36, 54)):
                 a = math.radians(ang)
                 base_r, length = 0.95, 0.38 + 0.06 * (k == 1)
@@ -619,8 +627,27 @@ class Mascot:
                     local = Vector((s * math.cos(aa) * radii[0] * f, math.sin(aa) * radii[1] * f, 0))
                     q, _ = self.on_head(center + rot @ local, lift=lifts[j])
                     pts.append(q)
-                self.add(tube(f"{name}_Lash{k + 1}", self.colls["Face"], self.mat["dark"], pts,
-                              (0.0065, 0.004, 0.0005)))
+                opened.append(self.add(tube(f"{name}_Lash{k + 1}", self.colls["Face"], self.mat["dark"],
+                                            pts, (0.0065, 0.004, 0.0005))))
+
+            # closed eye for wink / happy: an upturned arc with two lashes, shown by
+            # the rig's eye_closed_* property (see add_face_controls)
+            arc, rads = [], []
+            for i in range(11):
+                ang = math.pi * (1 - i / 10)
+                local = Vector((s * math.cos(ang) * radii[0] * 0.95,
+                                (math.sin(ang) * 0.42 - 0.12) * radii[1], 0))
+                arc.append(self.on_head(center + rot @ local, lift=0.005)[0])
+                rads.append(0.0055 + 0.0055 * math.sin(ang))
+            closed = [self.add(tube(name + "_Closed", self.colls["Face"], self.mat["dark"], arc, rads))]
+            corner = Vector((s * radii[0] * 0.95, -0.12 * radii[1], 0))
+            for k, ang in enumerate((22, -12)):
+                d = Vector((s * math.cos(math.radians(ang)), math.sin(math.radians(ang)), 0))
+                pts = [self.on_head(center + rot @ (corner + d * f), lift=lift)[0]
+                       for f, lift in ((0.0, 0.005), (0.02, 0.009), (0.036, 0.014))]
+                closed.append(self.add(tube(f"{name}_Closed_Lash{k + 1}", self.colls["Face"],
+                                            self.mat["dark"], pts, (0.006, 0.0035, 0.0005))))
+            self.eye_parts[name[-1]] = (opened, closed)
 
             # eyebrow
             brow = []
@@ -761,12 +788,12 @@ class Mascot:
                           (1, 1, 1), deform=self.torso_shape, seg=64, rings=32, subsurf=2)
         self.add(torso)
         bvh = bvh_of(torso)
-        hit, nrm, _, _ = bvh.ray_cast(Vector((0, 0, 0.72 - TORSO_C.z)), Vector((0, -1, 0)))
+        hit, nrm, _, _ = bvh.ray_cast(Vector((0, 0, 0.79 - TORSO_C.z)), Vector((0, -1, 0)))
         proj = bpy.data.objects.new("Shirt_Logo_Projector", None)
         proj.empty_display_type = "CIRCLE"
         self.colls["Helpers"].objects.link(proj)
         proj.matrix_world = (Matrix.Translation(TORSO_C + hit + nrm * 0.03)
-                             @ frame(nrm).to_4x4() @ Matrix.Diagonal((0.125, 0.125, 0.125, 1)))
+                             @ frame(nrm).to_4x4() @ Matrix.Diagonal((0.12, 0.12, 0.12, 1)))
         proj.parent = torso
         proj.matrix_parent_inverse = torso.matrix_world.inverted()
         add_decal(self.mat["shirt"], proj, self.textures / "logo_shirt.png")
@@ -861,6 +888,7 @@ class Mascot:
                 taper = 1.0 - 0.28 * max(0.0, u.z) ** 1.5
                 return Vector((u.x * (1 - 0.35 * max(0.0, u.z)), u.y * taper, u.z))
             hand_c = Vector((s * 0.033, -0.365, 0.955))
+            self.arm_joints[side] = (S, E, W, hand_c + tilt @ Vector((0, 0, 0.1)))
             self.add(ellipsoid("Hand." + side, self.colls["Limbs"], self.mat["skin"], hand_c,
                                (0.036, 0.06, 0.1), tilt, mitten))
             thumb_r = tilt @ Matrix.Rotation(math.radians(-25), 3, "X")
@@ -930,16 +958,297 @@ class Mascot:
         self.build_body()
         self.build_arms()
         self.build_legs_and_shoes()
-        root = bpy.data.objects.new("Nong_LanXang_Root", None)
-        root.empty_display_type = "ARROWS"
-        root.empty_display_size = 0.5
-        self.root_coll.objects.link(root)
+        return self.build_rig()
+
+    # ---------------- rig ----------------
+    def build_rig(self):
+        """Armature: rigid parts ride on bones, arms and trunk are skinned."""
+        data = bpy.data.armatures.new("Nong_LanXang_Rig")
+        rig = bpy.data.objects.new("Nong_LanXang_Rig", data)
+        self.root_coll.objects.link(rig)
+        rig.show_in_front = True
+        layer = bpy.context.view_layer
+        if layer.objects.active and layer.objects.active.mode != "OBJECT":
+            bpy.ops.object.mode_set(mode="OBJECT")
+        layer.objects.active = rig
+        rig.select_set(True)
+        bpy.ops.object.mode_set(mode="EDIT")
+        eb = data.edit_bones
+
+        def bone(name, head, tail, parent=None, connect=False, deform=True):
+            b = eb.new(name)
+            b.head, b.tail = Vector(head), Vector(tail)
+            if parent:
+                b.parent = eb[parent]
+                b.use_connect = connect
+            b.use_deform = deform
+            return b
+
+        bone("root", (0, 0, 0), (0, 0.45, 0), deform=False)
+        bone("torso", (0, 0, 0.62), (0, 0, 1.06), "root")
+        bone("head", (0, 0, 1.06), (0, 0, 1.9), "torso", connect=True)
+        j = [self.trunk_pts[i] for i in (1, 3, 5, 8)]
+        bone("trunk.1", j[0], j[1], "head")
+        bone("trunk.2", j[1], j[2], "trunk.1", connect=True)
+        bone("trunk.3", j[2], j[3], "trunk.2", connect=True)
+        p, n = self.mouth_frame
+        bone("mouth", p - n * 0.07, p, "head").align_roll(Vector((0, 0, 1)))
+        bone("tail", (0, 0.18, 0.52), (0, 0.415, 0.25), "torso")
+        for s, side in ((-1, "R"), (1, "L")):
+            S, E, W, tip = self.arm_joints[side]
+            bone(f"ear.{side}", (s * 0.37, 0.08, 1.40), (s * 0.66, 0.16, 1.46), "head")
+            bone(f"upper_arm.{side}", S, E, "torso")
+            bone(f"forearm.{side}", E, W, f"upper_arm.{side}", connect=True)
+            bone(f"hand.{side}", W, tip, f"forearm.{side}", connect=True)
+            bone(f"leg.{side}", (s * 0.15, 0, 0.55), (s * 0.165, -0.015, 0.16), "root")
+        bpy.ops.object.mode_set(mode="OBJECT")
+
+        layer.update()
         for coll in self.colls.values():
             for obj in coll.objects:
-                if obj.parent is None:
-                    obj.parent = root
-        self.root = root
-        return root
+                if obj.parent is not None:  # logo projectors ride on their garment
+                    continue
+                if obj.name.startswith("Arm."):
+                    side = obj.name[-1]
+                    skin_chain(obj, rig, self.arm_joints[side],
+                               [f"upper_arm.{side}", f"forearm.{side}", f"hand.{side}"], blend=0.045)
+                elif obj.name == "Trunk":
+                    skin_chain(obj, rig, [self.trunk_pts[0], *j],
+                               ["head", "trunk.1", "trunk.2", "trunk.3"], blend=0.04, first_cut=0.02)
+                else:
+                    bone_parent(obj, rig, rigid_bone(obj.name))
+        self.add_face_controls(rig)
+        return rig
+
+    def add_face_controls(self, rig):
+        for side, (opened, closed) in self.eye_parts.items():
+            prop = f"eye_closed_{side}"
+            rig[prop] = 0.0
+            rig.id_properties_ui(prop).update(
+                min=0.0, max=1.0, description="1 closes her %s eye" % ("left" if side == "L" else "right"))
+            for obj in opened:
+                drive_visibility(obj, rig, prop, when_closed=False)
+            for obj in closed:
+                drive_visibility(obj, rig, prop, when_closed=True)
+
+
+# --------------------------------------------------------------------------
+# rigging helpers
+# --------------------------------------------------------------------------
+
+RIGID_BONES = [  # object-name prefix -> bone; ".L/.R" is appended for limbs
+    (("Trunk_Tip", "Nostril"), "trunk.3"),
+    (("Mouth_Cutter", "Tongue"), "mouth"),
+    (("Ear.R",), "ear.R"),
+    (("Ear.L",), "ear.L"),
+    (("Head", "Eye", "Cap_", "Bow_"), "head"),
+    (("Sleeve",), "upper_arm."),
+    (("Hand.", "Thumb."), "hand."),
+    (("Leg.", "Shoe"), "leg."),
+    (("Tail",), "tail"),
+    (("Shirt_Body", "Collar", "Skirt"), "torso"),
+]
+
+
+def rigid_bone(name):
+    for prefixes, bone in RIGID_BONES:
+        if name.startswith(prefixes):
+            return bone + name[-1] if bone.endswith(".") else bone
+    return "root"
+
+
+def bone_parent(obj, rig, bone_name):
+    """Parent to a bone without moving the object."""
+    world = obj.matrix_world.copy()
+    b = rig.data.bones[bone_name]
+    obj.parent = rig
+    obj.parent_type = "BONE"
+    obj.parent_bone = bone_name
+    tail = rig.matrix_world @ b.matrix_local @ Matrix.Translation((0, b.length, 0))
+    obj.matrix_parent_inverse = tail.inverted()
+    obj.matrix_basis = world
+
+
+def polyline_param(p, pts):
+    """Arc-length position of the point on the polyline closest to p."""
+    best, run = None, 0.0
+    for a, b in zip(pts, pts[1:]):
+        ab = b - a
+        t = min(1.0, max(0.0, (p - a).dot(ab) / ab.length_squared))
+        d = (a + ab * t - p).length
+        if best is None or d < best[0]:
+            best = (d, run + t * ab.length)
+        run += ab.length
+    return best[1]
+
+
+def smoothstep(e0, e1, x):
+    t = min(1.0, max(0.0, (x - e0) / (e1 - e0)))
+    return t * t * (3 - 2 * t)
+
+
+def skin_chain(obj, rig, joints, bones, blend, first_cut=0.0):
+    """Weight a tube along joints[0..n] to bones[0..n-1], blending at each joint."""
+    joints = [Vector(j) for j in joints]
+    run = [0.0]
+    for a, b in zip(joints, joints[1:]):
+        run.append(run[-1] + (b - a).length)
+    cuts = run[1:-1]
+    cuts[0] += first_cut
+    groups = [obj.vertex_groups.new(name=b) for b in bones]
+    for v in obj.data.vertices:
+        u = polyline_param(v.co, joints)
+        for i, g in enumerate(groups):
+            lo = 1.0 if i == 0 else smoothstep(cuts[i - 1] - blend, cuts[i - 1] + blend, u)
+            hi = 1.0 if i == len(cuts) else 1.0 - smoothstep(cuts[i] - blend, cuts[i] + blend, u)
+            if lo * hi > 1e-4:
+                g.add([v.index], lo * hi, "REPLACE")
+    obj.parent = rig
+    obj.modifiers.new("Armature", "ARMATURE").object = rig
+
+
+def drive_visibility(obj, rig, prop, when_closed):
+    """Show/hide by scaling to ~0 from a rig property. Unlike hide_viewport, a
+    scale driver keeps evaluating, so the part can come back."""
+    cond = "(v > 0.5)" if when_closed else "(v < 0.5)"
+    for i, base in enumerate(tuple(obj.scale)):
+        drv = obj.driver_add("scale", i).driver
+        drv.type = "SCRIPTED"
+        var = drv.variables.new()
+        var.name, var.type = "v", "SINGLE_PROP"
+        var.targets[0].id_type = "OBJECT"
+        var.targets[0].id = rig
+        var.targets[0].data_path = f'["{prop}"]'
+        drv.expression = f"{base:.6f} * {cond} + 0.00001"
+
+
+# --------------------------------------------------------------------------
+# poses (stored as actions "Pose_<name>" on the rig, marked as pose assets)
+# --------------------------------------------------------------------------
+
+def _mirror(v):
+    return (-v[0], v[1], v[2])
+
+
+def _arms(wrist, pole, hand, palm, right=None):
+    """Arm targets for her left arm; the right arm mirrors it unless given."""
+    left = dict(wrist=wrist, pole=pole, hand=hand, palm=palm)
+    right = right or {k: _mirror(v) for k, v in left.items()}
+    return {"L": left, "R": right}
+
+
+RELAXED_ARMS = _arms(wrist=(0.38, -0.03, 0.70), pole=(0.3, 1, 0), hand=(0.3, -0.05, -1), palm=(-1, 0, -0.3))
+CHEEK_ARMS = _arms(wrist=(0.33, -0.33, 1.15), pole=(0.8, -0.3, -1), hand=(-0.12, 0.08, 1), palm=(-0.85, 0.5, 0))
+
+POSES = {
+    # the modelled rest pose: hands pressed together in a nop
+    "Nop": {},
+    "Wave": {
+        "arms": {
+            "L": dict(wrist=(0.58, -0.16, 1.04), pole=(0.6, 0.2, -1), hand=(0.25, -0.1, 1), palm=(0.1, -1, 0)),
+            "R": dict(wrist=(-0.40, -0.14, 0.66), pole=(-0.5, 1, 0), hand=(-0.45, -0.3, -0.85),
+                      palm=(0.2, -1, 0.2)),
+        },
+        "rotate": {"head": (0, -5, 0)},
+    },
+    "Relaxed": {"arms": RELAXED_ARMS},
+    "Happy": {
+        "arms": _arms(wrist=(0.62, -0.22, 1.08), pole=(0.2, 0.3, -1), hand=(0.7, -0.25, 0.65), palm=(0, -1, 0.15)),
+        "rotate": {"head": (-6, 0, 0), "trunk.1": (-12, 0, 0), "trunk.2": (-10, 0, 0)},
+        "eyes_closed": "LR",
+        "mouth": (1.15, 1.35),
+    },
+    "Sweet": {"arms": CHEEK_ARMS, "rotate": {"head": (0, 6, 0)}, "mouth": (0.8, 0.55)},
+    "Wink": {"arms": CHEEK_ARMS, "rotate": {"head": (0, -6, 0)}, "eyes_closed": "R", "mouth": (1.1, 1.2)},
+}
+
+POSE_ORDER = ("torso", "head", "ear.L", "ear.R", "trunk.1", "trunk.2", "trunk.3", "tail", "leg.L", "leg.R")
+
+
+def rotate_bone(pb, euler_deg):
+    """Extra rotation in armature space on top of what the bone inherits."""
+    m = pb.matrix.copy()
+    r = Euler([math.radians(a) for a in euler_deg]).to_matrix()
+    pb.matrix = Matrix.Translation(m.translation) @ (r @ m.to_3x3().normalized()).to_4x4()
+
+
+def aim_bone(pb, direction, ref_rest=None, ref_new=None):
+    """Point the bone along `direction`; optionally also turn a reference axis
+    (e.g. the palm normal) from its rest direction to `ref_new`."""
+    rest = pb.bone.matrix_local.to_3x3()
+    y0, y1 = rest.col[1].normalized(), Vector(direction).normalized()
+    if ref_rest is None:
+        r = y0.rotation_difference(y1).to_matrix()
+    else:
+        def basis(y, ref):
+            z = (Vector(ref) - y * Vector(ref).dot(y)).normalized()
+            return Matrix((y.cross(z), y, z)).transposed()
+        r = basis(y1, ref_new) @ basis(y0, ref_rest).transposed()
+    pb.matrix = Matrix.Translation(pb.head) @ (r @ rest).to_4x4()
+
+
+def pose_arm(rig, side, wrist, pole, hand, palm):
+    """Two-bone IK: put the wrist on `wrist`, bend the elbow towards `pole`."""
+    update = bpy.context.view_layer.update
+    update()
+    ua, fa, hd = (rig.pose.bones[f"{b}.{side}"] for b in ("upper_arm", "forearm", "hand"))
+    shoulder = ua.head.copy()
+    l1, l2 = ua.bone.length, fa.bone.length
+    to = Vector(wrist) - shoulder
+    d = min(max(to.length, abs(l1 - l2) + 1e-3), l1 + l2 - 1e-3)
+    axis = to.normalized()
+    a = (l1 * l1 - l2 * l2 + d * d) / (2 * d)
+    h = math.sqrt(max(0.0, l1 * l1 - a * a))
+    bend = Vector(pole) - axis * Vector(pole).dot(axis)
+    elbow = shoulder + axis * a + bend.normalized() * h
+    aim_bone(ua, elbow - shoulder)
+    update()
+    aim_bone(fa, shoulder + axis * d - elbow)
+    update()
+    s = 1 if side == "L" else -1
+    aim_bone(hd, hand, (-s, 0, 0), palm)  # at rest the palms face each other
+    update()
+
+
+def apply_pose(rig, spec):
+    update = bpy.context.view_layer.update
+    for pb in rig.pose.bones:
+        pb.matrix_basis = Matrix.Identity(4)
+    for side in "LR":
+        rig[f"eye_closed_{side}"] = 1.0 if side in spec.get("eyes_closed", "") else 0.0
+    rot = spec.get("rotate", {})
+    for name in POSE_ORDER:
+        if name in rot:
+            update()
+            rotate_bone(rig.pose.bones[name], rot[name])
+    for side, arm in spec.get("arms", {}).items():
+        pose_arm(rig, side, **arm)
+    sx, sz = spec.get("mouth", (1.0, 1.0))
+    rig.pose.bones["mouth"].scale = (sx, 1.0, sz)
+    update()
+
+
+def store_poses(rig):
+    """Bake every entry of POSES into a one-frame action and leave the rig at rest."""
+    rig.animation_data_create()
+    for name, spec in POSES.items():
+        rig.animation_data.action = None  # otherwise every update re-applies the last pose
+        apply_pose(rig, spec)
+        act = bpy.data.actions.new(f"Pose_{name}")
+        act.use_fake_user = True
+        act["nong_lanxang_pose"] = True  # lets a rebuild find and replace it
+        rig.animation_data.action = act
+        for pb in rig.pose.bones:
+            for path in ("location", "rotation_quaternion", "scale"):
+                pb.keyframe_insert(path, frame=1, group=pb.name)
+        for side in "LR":
+            rig.keyframe_insert(f'["eye_closed_{side}"]', frame=1)
+        try:
+            act.asset_mark()  # shows up in the Pose Library
+        except (AttributeError, RuntimeError):
+            pass
+    rig.animation_data.action = None
+    apply_pose(rig, POSES["Nop"])
 
 
 # --------------------------------------------------------------------------
@@ -950,24 +1259,12 @@ def build_studio(samples, resolution):
     scene = bpy.context.scene
     coll = new_collection("Studio")
 
-    # seamless cyclorama backdrop
+    # floor that only catches her shadow, so renders come out as clean cut-outs
     bm = bmesh.new()
-    prof = []
-    for i in range(40):
-        t = i / 39
-        if t < 0.6:
-            prof.append((-9 + 13 * t / 0.6, 0.0))
-        else:
-            a = (t - 0.6) / 0.4 * (math.pi / 2)
-            prof.append((4 + 3.5 * math.sin(a), 3.5 * (1 - math.cos(a))))
-    prof.append((7.5, 12.0))
-    rows = []
-    for x in (-10, 10):
-        rows.append([bm.verts.new((x, y, z)) for y, z in prof])
-    for i in range(len(prof) - 1):
-        bm.faces.new((rows[0][i], rows[1][i], rows[1][i + 1], rows[0][i + 1]))
-    backdrop = finish_mesh("Backdrop", bm, coll, principled("Backdrop", PALETTE["backdrop"], 0.9))
-    backdrop.data.materials[0].diffuse_color = srgb(PALETTE["backdrop"])
+    bmesh.ops.create_circle(bm, cap_ends=True, segments=64, radius=6.0)
+    floor = finish_mesh("Floor_Shadow", bm, coll, principled("Floor", PALETTE["backdrop"], 0.9),
+                        smooth=False)
+    floor.is_shadow_catcher = True
 
     world = bpy.data.worlds.new("Studio_World")
     scene.world = world
@@ -1010,26 +1307,11 @@ def build_studio(samples, resolution):
     scene.cycles.max_bounces = 8
     scene.render.resolution_x, scene.render.resolution_y = resolution
     scene.render.resolution_percentage = 100
-    scene.render.film_transparent = False
+    scene.render.film_transparent = True
     scene.render.image_settings.file_format = "PNG"
     scene.view_settings.view_transform = "Standard"
     scene.view_settings.exposure = -1.25
     return cam
-
-
-VIEWS = {"front": 0, "three_quarter": 35, "side": 90, "back": 180}
-
-
-def render_views(root, out_dir, views):
-    out_dir = Path(out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    scene = bpy.context.scene
-    for name in views:
-        root.rotation_euler = (0, 0, math.radians(VIEWS[name]))
-        scene.render.filepath = str(out_dir / f"{name}.png")
-        bpy.ops.render.render(write_still=True)
-        print("rendered", scene.render.filepath, flush=True)
-    root.rotation_euler = (0, 0, 0)
 
 
 def main():
@@ -1038,18 +1320,15 @@ def main():
     default_out = str(HERE / "nong_lanxang.blend") if bpy.app.background else ""
     ap.add_argument("--out", default=default_out, help="save the .blend here ('' to skip)")
     ap.add_argument("--textures", default=str(HERE / "textures"))
-    ap.add_argument("--render", default=None, help="directory for turnaround renders")
-    ap.add_argument("--views", default=",".join(VIEWS))
-    ap.add_argument("--samples", type=int, default=128)
+    ap.add_argument("--samples", type=int, default=96)
     ap.add_argument("--res", default="1000x1200")
     args, _ = ap.parse_known_args(argv)
 
     reset_scene()
     mascot = Mascot(args.textures)
-    root = mascot.build()
+    rig = mascot.build()
+    store_poses(rig)
     build_studio(args.samples, tuple(int(v) for v in args.res.split("x")))
-    if args.render:
-        render_views(root, args.render, [v for v in args.views.split(",") if v])
     if args.out:
         for img in bpy.data.images:
             if img.filepath and not img.packed_file:
